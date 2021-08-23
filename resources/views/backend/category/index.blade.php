@@ -4,64 +4,80 @@
  <!-- DataTales Example -->
  <div class="card shadow mb-4">
      <div class="row">
-       <div class="col-md-12">
+         <div class="col-md-12">
             @include('backend.layouts.notification')
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Banners List</h6>
-      <a href="{{route('banner.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Banner</a>
+      <h6 class="m-0 font-weight-bold text-primary float-left">Category Lists</h6>
+      <a href="{{route('category.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Category</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        @if(count($banners)>0)
+        @if(count($categories)>0)
         <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th>S.N.</th>
               <th>Title</th>
               <th>Slug</th>
+              <th>Is Parent</th>
+              <th>Parent Category</th>
               <th>Photo</th>
               <th>Status</th>
-              <th>Conditions</th>
-
               <th>Action</th>
             </tr>
           </thead>
-         
+          <tfoot>
+            <tr>
+              <th>S.N.</th>
+              <th>Title</th>
+              <th>Slug</th>
+              <th>Is Parent</th>
+              <th>Parent Category</th>
+              <th>Photo</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
           <tbody>
-            @foreach($banners as $banner)   
+           
+            @foreach($categories as $category)   
+              @php 
+              $parent_cats=DB::table('categories')->select('title')->where('id',$category->parent_id)->get();
+              // dd($parent_cats);
+
+              @endphp
                 <tr>
-                    <td>{{$banner->id}}</td>
-                    <td>{{$banner->title}}</td>
-                    <td>{{$banner->slug}}</td>
+                    <td>{{$category->id}}</td>
+                    <td>{{$category->title}}</td>
+                    <td>{{$category->slug}}</td>
+                    <td>{{(($category->is_parent==1)? 'Yes': 'No')}}</td>
                     <td>
-                        @if($banner->photo)
-                            <img src="{{$banner->photo}}" class="img-fluid zoom" style="max-width:80px" alt="{{$banner->photo}}">
+                        @foreach($parent_cats as $parent_cat)
+                            {{$parent_cat->title}}
+                        @endforeach
+                    </td>
+                    <td>
+                        @if($category->photo)
+                            <img src="{{$category->photo}}" class="img-fluid" style="max-width:80px" alt="{{$category->photo}}">
                         @else
-                            <img src="{{asset('backend/img/thumbnail-default.jpg')}}" class="img-fluid zoom" style="max-width:100%" alt="avatar.png">
+                            <img src="{{asset('backend/img/thumbnail-default.jpg')}}" class="img-fluid" style="max-width:80px" alt="avatar.png">
                         @endif
                     </td>
                     <td>
-                        @if($banner->status=='active')
-                            <span class="badge badge-success">{{$banner->status}}</span>
+                        @if($category->status=='active')
+                            <span class="badge badge-success">{{$category->status}}</span>
                         @else
-                            <span class="badge badge-warning">{{$banner->status}}</span>
+                            <span class="badge badge-warning">{{$category->status}}</span>
                         @endif
                     </td>
                     <td>
-                      @if($banner->conditions=='banner')
-                          <span class="badge badge-success"  >{{$banner->conditions}}</span>
-                      @else
-                          <span class="badge badge-success">{{$banner->conditions}}</span>
-                      @endif
-                  </td>
-                    <td>
-                        <a href="{{route('banner.edit',$banner->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                        <form method="POST" action="{{route('banner.destroy',[$banner->id])}}">
-                          @csrf 
-                          @method('delete')
-                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$banner->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                        <a href="{{route('category.edit',$category->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                    <form method="POST" action="{{route('category.destroy',[$category->id])}}">
+                      @csrf 
+                      @method('delete')
+                          <button class="btn btn-danger btn-sm dltBtn" data-id={{$category->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                     {{-- Delete Modal --}}
@@ -75,7 +91,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <form method="post" action="{{ route('banners.destroy',$user->id) }}">
+                              <form method="post" action="{{ route('categorys.destroy',$user->id) }}">
                                 @csrf 
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger" style="margin:auto; text-align:center">Parmanent delete user</button>
@@ -88,9 +104,9 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$banners->links()}}</span>
+        <span style="float:right">{{$categories->links()}}</span>
         @else
-          <h6 class="text-center">No banners found!!! Please create banner</h6>
+          <h6 class="text-center">No Categories found!!! Please create Category</h6>
         @endif
       </div>
     </div>
@@ -103,13 +119,6 @@
   <style>
       div.dataTables_wrapper div.dataTables_paginate{
           display: none;
-      }
-      .zoom {
-        transition: transform .2s; /* Animation */
-      }
-
-      .zoom:hover {
-        transform: scale(3.2);
       }
   </style>
 @endpush

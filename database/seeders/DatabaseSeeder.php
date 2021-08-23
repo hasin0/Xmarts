@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
        // $this->call(BannerSeeder::class);
 
         \App\Models\User::factory(50)->create();
+        \App\Models\Category::factory(20)->create();
+        
+
       //  \App\Models\Banner::factory(50)->create();
 
     }

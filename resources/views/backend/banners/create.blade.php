@@ -5,10 +5,26 @@
 @section('main-content')
 
 <div class="card">
+
+    <div class="col-md-12">
+        @if ($errors->any())
+
+        <div class="alert alert-danger">
+         <ul>
+          @foreach ($errors->all() as $error)
+          <li>{{$error}}</li>
+
+              
+          @endforeach
+        </ul>
+      </div> 
+        @endif
+
+    </div>
     <h5 class="card-header">Add Banner</h5>
     <div class="card-body">
       <form method="post" action="{{route('banner.store')}}">
-        {{csrf_field()}}
+          @csrf
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Title <span class="text-danger">*</span></label>
         <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{old('title')}}" class="form-control">
@@ -25,39 +41,30 @@
           @enderror
         </div>
 
-
-        
         <div class="form-group">
-          <label for="inputPhoto" class="col-form-label">FILE <span class="text-danger">*</span></label>
-          <div class="input-group">
+        <label for="inputPhoto" class="col-form-label">Photo <span class="text-danger">*</span></label>
+        <div class="input-group">
             <span class="input-group-btn">
-              <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
                 <i class="fa fa-picture-o"></i> Choose
-              </a>
+                </a>
             </span>
-            <input id="thumbnail" class="form-control" type="text" name="filepath">
-          </div>
-          <div id="holder" style="margin-top:15px;max-height:100px;"></div>
-          </div>
+          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}">
+        </div>
+        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+          @error('photo')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
 
-
-
-
-
-
-
-
-
-
-        
 
         <div class="form-group">
-          <label for="conditions" class="col-form-label">Conditions <span class="text-danger">*</span></label>
+          <label for="condition" class="col-form-label">Conditions <span class="text-danger">*</span></label>
           <select name="conditions" class="form-control">
-              <option value="Banner">Banner</option>
-              <option value="Promo">Promo</option>
+              <option value="banner">Banner</option>
+              <option value="promo">Promo</option>
           </select>
-          @error('conditions')
+          @error('condition')
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>

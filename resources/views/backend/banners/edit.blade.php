@@ -39,6 +39,13 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
+
+        <div class="form-group">
+          <label for="conditions" class="col-form-label">Condition <span class="text-danger">*</span></label>
+          <select name="conditions" class="form-control">
+            <option value="banner" {{(($banner->conditions=='banner') ? 'selected' : '')}}>banner</option>
+            <option value="promo" {{(($banner->conditions=='promo') ? 'selected' : '')}}>promo</option>
+          </select>
         
         <div class="form-group">
           <label for="status" class="col-form-label">Status <span class="text-danger">*</span></label>

@@ -2,7 +2,7 @@
 @section('title','E-SHOP || DASHBOARD')
 @section('main-content')
 <div class="container-fluid">
- {{--         @include('backend.layouts.notification')--}} 
+         @include('backend.layouts.notification')
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">

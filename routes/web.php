@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,8 +29,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
 
     Route::get('/',[\App\Http\Controllers\AdminController::class,'admin'])->name('admin');
-    //
+    //banners
     Route::resource('banner',BannerController::class,['index']);
+   // Route::post('banner_condition',[\App\Http\Controllers\BannerController::class,'bannercondition'])->name('banner.condition');
+     
+   //category section
+   Route::resource('category',CategoryController::class,['index']);
+
+
 
 
 });
