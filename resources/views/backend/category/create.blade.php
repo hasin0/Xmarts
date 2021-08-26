@@ -38,10 +38,14 @@
           @enderror
         </div>
 
-        <div class="form-group">
-          <label for="is_parent">Is Parent</label><br>
-          <input type="checkbox" name='is_parent' id='is_parent' value='1' checked> Yes                        
-        </div>
+      
+
+            <div class="col-lg-12 col-md-12">
+              <div class="form-group">
+                  <label for="">Is parent : </label>
+                  <input id="is_parent" type="checkbox" name="is_parent" value="1" checked> Yes
+              </div>
+            </div>
         {{-- {{$parent_cats}} --}}
 
         <div class="form-group d-none" id='parent_cat_div'>

@@ -49,28 +49,27 @@ class CategoryController extends Controller
         $this->validate($request,[
             'title'=>'string|required',
             'summary'=>'string|nullable',
-            'photo'=>'string|nullable',
-            'status'=>'required|in:active,inactive',
             'is_parent'=>'sometimes|in:1',
             'parent_id'=>'nullable|exists:categories,id',
+            'status'=>'nullable|in:active,inactive'
         ]);
-        $data= $request->all();
-        $slug=Str::slug($request->title);
-        $count=Category::where('slug',$slug)->count();
-        if($count>0){
-            $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
+        $data=$request->all();
+//        return $data;
+        $slug=Str::slug($request->input('title'));
+        $slug_count=Category::where('slug',$slug)->count();
+        if($slug_count>0){
+            $slug = time().'-'.$slug;
         }
         $data['slug']=$slug;
         $data['is_parent']=$request->input('is_parent',0);
-        // return $data;   
+//        return $data;
         $status=Category::create($data);
         if($status){
-            request()->session()->flash('success','Category successfully added');
+            return redirect()->route('category.index')->with('success','Category successfully created');
         }
         else{
-            request()->session()->flash('error','Error occurred, Please try again!');
+            return back()->with('error','Something went wrong!');
         }
-        return redirect()->route('category.index');
         //
     }
 
@@ -107,40 +106,33 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-          $category=Category::findOrFail($id);
-
-          if( $category)
-          {
+        $category=Category::find($id);
+        if($category){
             $this->validate($request,[
                 'title'=>'string|required',
                 'summary'=>'string|nullable',
-                'photo'=>'string|nullable',
-                'status'=>'required|in:active,inactive',
                 'is_parent'=>'sometimes|in:1',
                 'parent_id'=>'nullable|exists:categories,id',
             ]);
-            $data= $request->all();
-    
-            if($request->is_parent==1)
-            {
+
+            $data=$request->all();
+
+            if($request->is_parent==1){
                 $data['parent_id']=null;
-    
             }
-    
-    
+
             $data['is_parent']=$request->input('is_parent',0);
-            // return $data;
             $status=$category->fill($data)->save();
             if($status){
-                request()->session()->flash('success','Category successfully updated');
+                return redirect()->route('category.index')->with('success','Category successfully updated');
             }
             else{
-                request()->session()->flash('error','Error occurred, Please try again!');
+                return back()->with('error','Something went wrong!');
             }
-            return redirect()->route('category.index');
-          }
-          
-      
+        }
+        else{
+            return back()->with('error','Category not found');
+        }
         //
     }
 

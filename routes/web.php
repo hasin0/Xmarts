@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BrandController;
+
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,6 +38,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
      
    //category section
    Route::resource('category',CategoryController::class,['index']);
+
+   //brand section
+   Route::resource('brand',BrandController::class,['index']);
+
 
 
 
