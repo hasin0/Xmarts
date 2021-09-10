@@ -51,7 +51,7 @@ class CategoryController extends Controller
             'summary'=>'string|nullable',
             'is_parent'=>'sometimes|in:1',
             'parent_id'=>'nullable|exists:categories,id',
-            'status'=>'nullable|in:active,inactive'
+            'status'=>'required|in:active,inactive',
         ]);
         $data=$request->all();
 //        return $data;
@@ -113,6 +113,8 @@ class CategoryController extends Controller
                 'summary'=>'string|nullable',
                 'is_parent'=>'sometimes|in:1',
                 'parent_id'=>'nullable|exists:categories,id',
+                'status'=>'required|in:active,inactive',
+
             ]);
 
             $data=$request->all();
@@ -163,4 +165,29 @@ class CategoryController extends Controller
         return redirect()->route('category.index');
         //
     }
+
+public function getChildByParentID(Request $request,$id)
+{
+    $category=Category::find($request->id);
+
+   if($category)
+   {
+    $child_id= Category::getChildByParentID($request->id);
+
+    if(count($child_id)<=0)
+    {
+        return response()->json(['status'=>false,'data'=>null]);
+    }
+
+    return response()->json(['status'=>true,'data'=>$child_id]);
+
+   }else{
+       
+    return response()->json(['status'=>false,'data'=>null,'msg'=>'Catergory not found']);
+
+   }
+
+
+}
+
 }

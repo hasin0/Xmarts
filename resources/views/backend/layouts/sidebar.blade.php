@@ -75,7 +75,7 @@
     </li>
     {{-- Products --}}
    
-     {{--}} <li class="nav-item">
+     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#productCollapse" aria-expanded="true" aria-controls="productCollapse">
           <i class="fas fa-cubes"></i>
           <span>Products</span>

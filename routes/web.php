@@ -3,6 +3,7 @@
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -38,10 +39,14 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
      
    //category section
    Route::resource('category',CategoryController::class,['index']);
+   Route::post('category/{id}/child',[CategoryController::class,'getChildByParentID']);
 
    //brand section
    Route::resource('brand',BrandController::class,['index']);
-
+ 
+   
+   //products section
+   Route::resource('product',ProductController::class,['index']);
 
 
 
