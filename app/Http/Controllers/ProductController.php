@@ -51,6 +51,52 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'title'=>'string|required',
+            'summary'=>'string|required',
+            'description'=>'string|nullable',
+            'photo'=>'string|required',
+            'size'=>'nullable',
+            'stock'=>"required|numeric",
+            'cat_id'=>'required|exists:categories,id',
+            'brand_id'=>'nullable|exists:brands,id',
+            'child_cat_id'=>'nullable|exists:categories,id',
+            'is_featured'=>'sometimes|in:1',
+            'status'=>'required|in:active,inactive',
+            'condition'=>'required|in:default,new,hot',
+            'price'=>'required|numeric',
+            'discount'=>'nullable|numeric'
+        ]);
+
+        $data=$request->all();
+        $slug=Str::slug($request->title);
+        $count=Product::where('slug',$slug)->count();
+        if($count>0){
+            $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
+        }
+        $data['slug']=$slug;
+
+        $data['offer_price']=($request->price-(($request->price*$request->discount)/100));
+
+
+        $data['is_featured']=$request->input('is_featured',0);
+        $size=$request->input('size');
+        if($size){
+            $data['size']=implode(',',$size);
+        }
+        else{
+            $data['size']='';
+        }
+        // return $size;
+        // return $data;
+        $status=Product::create($data);
+        if($status){
+            request()->session()->flash('success','Product Successfully added');
+        }
+        else{
+            request()->session()->flash('error','Please try again!!');
+        }
+        return redirect()->route('product.index');
         //
     }
 
@@ -62,6 +108,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+
         //
     }
 

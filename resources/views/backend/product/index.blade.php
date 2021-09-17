@@ -45,6 +45,8 @@
               <tr>
                   <td>{{$product->id}}</td>
                   <td>{{$product->title}}</td>
+                  <td>  {{$product->catergory}}% OFF</td>
+
                {{--   <td>{{$product->cat_info['title']}}
                     <sub>
                       @foreach($sub_cat_info as $data)
@@ -84,7 +86,9 @@
                       @endif
                   </td>
                   <td>
-                      <a href="{{route('product.edit',$product->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                      <a href="{{route('product.show',$product->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit"  data-placement="bottom"><i class="fas fa-edit"></i></a>
+                      <a href="javascripts:void(0);" data-toggle="modal" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-target="#productID{{$product->id}}" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
+
                   <form method="POST" action="{{route('product.destroy',[$product->id])}}">
                     @csrf 
                     @method('delete')
@@ -92,25 +96,124 @@
                       </form>
                   </td>
                   {{-- Delete Modal --}}
-                  {{-- <div class="modal fade" id="delModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="#delModal{{$user->id}}Label" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="#delModal{{$user->id}}Label">Delete user</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form method="post" action="{{ route('categorys.destroy',$user->id) }}">
-                              @csrf 
-                              @method('delete')
-                              <button type="submit" class="btn btn-danger" style="margin:auto; text-align:center">Parmanent delete user</button>
-                            </form>
-                          </div>
-                        </div>
+                 
+            <div class="modal fade" id="productID{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="productID{{$product->id}}Label" aria-hidden="true">
+              <div class="modal-dialog">
+                @php
+                $product=\App\Models\Product::where('id',$product->id)->first();
+                @endphp
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="productID{{$product->id}}Label">{{$product->title}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>Summary:</strong>
+                        <p>{!! html_entity_decode($product->summary)!!}</p>
                       </div>
-                  </div> --}}
+                     </div>
+
+                     <div class="row">
+                      <div class="col-md-6">
+
+                     
+                    <strong>Description:</strong>
+                    <p>{!! html_entity_decode($product->description)!!}</p>
+                      </div>
+                     </div>
+
+                     <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>Price:</strong>
+                        <p>${{number_format($product->price)}}</p>
+                      </div>
+                     </div>
+
+                     <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>Offer price</strong>
+                        <p>${{number_format($product->offer_price,2)}}</p>
+                      </div>
+                     </div>
+
+                     <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>Discount</strong>
+                        <p>{{number_format($product->discount)}}%</p>
+                      </div>
+                     </div>
+
+                     <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>Catergory:</strong>
+                        <p>{{\App\Models\Category::where('id',$product->cat_id)->value('title')}}</p>
+                      </div>
+                     </div>
+
+
+                     <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>Child Catergory:</strong>
+                        <p>{{\App\Models\Category::where('id',$product->child_cat_id)->value('title')}}</p>
+                      </div>
+                     </div>
+
+
+
+                     <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>Brands:</strong>
+                        <p>@foreach($brands as $brand) {{$brand->title}} @endforeach</p>
+                        {{--<p>{{\App\Models\Brand::where('id',$product->brand_id)->value('title')}}</p>--}}
+                      </div>
+                     </div>
+
+
+                     <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>Size</strong>
+                        <p>{{$product->size}}</p>
+                      </div>
+                     </div>
+
+                     
+                     <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>condition</strong>
+                        <p>{{$product->condition}}</p>
+                      </div>
+                     </div>
+
+
+                 
+                 
+                   
+
+                   
+
+
+                  
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
               </tr>  
           @endforeach
           </tbody>

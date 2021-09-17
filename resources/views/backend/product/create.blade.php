@@ -2,7 +2,26 @@
 
 @section('main-content')
 
+
 <div class="card">
+  <div class="col-md-12">
+    @if ($errors->any())
+
+    <div class="alert alert-danger">
+     <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{$error}}</li>
+
+          
+      @endforeach
+    </ul>
+  </div> 
+    @endif
+
+</div>
+
+<div class="card">
+
     <h5 class="card-header">Add Product</h5>
     <div class="card-body">
       <form method="post" action="{{route('product.store')}}">
@@ -51,7 +70,7 @@
         <div class="form-group d-none" id="child_cat_div">
           <label for="child_cat_id">Sub Category</label>
           <select name="child_cat_id" id="child_cat_id" class="form-control">
-                 {{-- <option value="">--Select any category--</option>--}}
+             {{--  <option value="">--Select any category--</option>--}}
               {{-- @foreach($parent_cats as $key=>$parent_cat)
                   <option value='{{$parent_cat->id}}'>{{$parent_cat->title}}</option>
               @endforeach --}}
@@ -160,7 +179,6 @@
 
 <script>
     $('#lfm').filemanager('image');
-
     $(document).ready(function() {
       $('#summary').summernote({
         placeholder: "Write short description.....",
@@ -168,7 +186,6 @@
           height: 100
       });
     });
-
     $(document).ready(function() {
       $('#description').summernote({
         placeholder: "Write detail description.....",
@@ -177,7 +194,6 @@
       });
     });
     // $('select').selectpicker();
-
 </script>
 
 <script>
@@ -188,38 +204,35 @@
       // Ajax call
       $.ajax({
         url:"/admin/category/"+cat_id+"/child",
+        type:"POST",
         data:{
           _token:"{{csrf_token()}}",
           id:cat_id
         },
-        type:"POST",
-        success:function(response){
-          if(typeof(response) !='object'){
-            response=$.parseJSON(response)
-          }
-          //  console.log(response);
-          var html_option="<option value=''>----Select sub category----</option>"
-          if(response.status){
-            var data=response.data;
-            // alert(data);
-            if(response.data){
-              $('#child_cat_div').removeClass('d-none');
-              $.each(data,function(id,title){
-                html_option +="<option value='"+id+"'>"+title+"</option>"
-              });
-            }
-            else{
-            }
-          }
-          else{
-            $('#child_cat_div').addClass('d-none');
-          }
-          $('#child_cat_id').html(html_option);
+       
+
+       success:function(response){
+        
+        var html_option="<option value=''>--Select child category--</option>";
+        
+        if(response.status){
+          $('#child_cat_div').removeClass('d-none');
+          $.each(response.data,function(id,title){
+            html_option += "<option value='"+id+"'>"+title+"</option>"
+          });
         }
+        else{
+          $('#child_cat_div').addClass('d-none');
+        }
+        $('#child_cat_id').html(html_option);
+
+
+       }
+        
+        
       });
     }
-    else{
-    }
-  })
+    
+  });
 </script>
 @endpush

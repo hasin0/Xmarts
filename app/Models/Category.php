@@ -17,6 +17,10 @@ class Category extends Model
     }
     public static function  getChildByParentID($id)
     {
-        return Category::where('parent_id',$id)->get();
+        return Category::where('parent_id',$id)->pluck('title','id');
+    }
+
+    public function child_cat(){
+        return $this->hasMany('App\Models\Category','parent_id','id')->where('status','active');
     }
 }
