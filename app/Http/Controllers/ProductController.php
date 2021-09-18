@@ -51,6 +51,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
+        
         $this->validate($request,[
             'title'=>'string|required',
             'summary'=>'string|required',
@@ -120,6 +122,14 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        $product=Product::find($id);
+        $brand=Brand::get();
+        $items=Product::where('id',$id)->get();
+
+        $category=Category::where('is_parent',1)->get();
+        $vendor=User::where('role','vendor')->get();
+        
+        return view('backend.product.edit')->with('categories',$category)->with('brands',$brand)->with('vendor',$vendor)->with('product',$product)->with('items',$items);
         //
     }
 
@@ -132,6 +142,47 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $product=Product::findOrFail($id);
+
+        $this->validate($request,[
+            'title'=>'string|required',
+            'summary'=>'string|required',
+            'description'=>'string|nullable',
+            'photo'=>'string|required',
+            'size'=>'nullable',
+            'stock'=>"required|numeric",
+            'cat_id'=>'required|exists:categories,id',
+            'brand_id'=>'nullable|exists:brands,id',
+            'child_cat_id'=>'nullable|exists:categories,id',
+            'is_featured'=>'sometimes|in:1',
+            'status'=>'required|in:active,inactive',
+            'condition'=>'required|in:default,new,hot',
+            'price'=>'required|numeric',
+            'discount'=>'nullable|numeric'
+        ]);
+
+        $data=$request->all();
+       // $slug=Str::slug($request->title);
+       // $count=Product::where('slug',$slug)->count();
+       
+
+        $data['offer_price']=($request->price-(($request->price*$request->discount)/100));
+
+        $data['is_featured']=$request->input('is_featured',0);
+      
+        // return $data;
+        $status=$product->fill($data)->save();
+        if($status){
+            request()->session()->flash('success','Product Successfully updated');
+        }
+        else{
+            request()->session()->flash('error','Please try again!!');
+        }
+        return redirect()->route('product.index');
+        //
+
+
         //
     }
 
@@ -143,6 +194,19 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+
+        
+        $product=Product::findOrFail($id);
+        $status=$product->delete();
+        
+        if($status){
+            request()->session()->flash('success','Product successfully deleted');
+        }
+        else{
+            request()->session()->flash('error','Error while deleting product');
+        }
+        return redirect()->route('product.index');
+    
         //
     }
 }

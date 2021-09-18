@@ -86,7 +86,7 @@
                       @endif
                   </td>
                   <td>
-                      <a href="{{route('product.show',$product->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit"  data-placement="bottom"><i class="fas fa-edit"></i></a>
+                      <a href="{{route('product.edit',$product->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit"  data-placement="bottom"><i class="fas fa-edit"></i></a>
                       <a href="javascripts:void(0);" data-toggle="modal" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-target="#productID{{$product->id}}" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
 
                   <form method="POST" action="{{route('product.destroy',[$product->id])}}">
@@ -127,7 +127,7 @@
                      </div>
 
                      <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-4">
 
                         <strong>Price:</strong>
                         <p>${{number_format($product->price)}}</p>
@@ -135,7 +135,7 @@
                      </div>
 
                      <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-4">
 
                         <strong>Offer price</strong>
                         <p>${{number_format($product->offer_price,2)}}</p>
@@ -143,7 +143,7 @@
                      </div>
 
                      <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-4">
 
                         <strong>Discount</strong>
                         <p>{{number_format($product->discount)}}%</p>
@@ -184,6 +184,17 @@
 
                         <strong>Size</strong>
                         <p>{{$product->size}}</p>
+                      </div>
+                     </div>
+
+
+
+                     
+                     <div class="row">
+                      <div class="col-md-6">
+
+                        <strong>Vendor:</strong>
+                        <p>{{\App\Models\User::where('id',$product->vendor_id)->value('full_name')}}</p>
                       </div>
                      </div>
 
