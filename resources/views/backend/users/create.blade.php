@@ -3,6 +3,22 @@
 @section('main-content')
 
 <div class="card">
+
+  <div class="col-md-12">
+    @if ($errors->any())
+
+    <div class="alert alert-danger">
+     <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{$error}}</li>
+
+          
+      @endforeach
+    </ul>
+  </div> 
+    @endif
+
+</div>
     <h5 class="card-header">Add User</h5>
     <div class="card-body">
       <form method="post" action="{{route('users.store')}}">

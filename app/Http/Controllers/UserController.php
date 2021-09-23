@@ -107,6 +107,36 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user=User::findOrFail($id);
+        //dd($request->all());
+
+        $this->validate($request,
+        [
+            'username'=>'string|nullable|max:30',
+           'full_name'=>'string|required|max:30',
+
+           'email'=>'string|required|exists:users,email',
+           
+           'role'=>'required|in:admin,vendor,customer',
+           'status'=>'required|in:active,inactive',
+           'photo'=>'nullable|string',
+           'phone'=>'nullable|string',
+
+           'address'=>'nullable|string',
+        ]);
+        //dd($request->all());
+        $data=$request->all();
+        $data['password']=Hash::make($request->password);
+        // dd($data);
+          $status=$user->fill($data)->save();
+         //dd($status);
+        if($status){
+            request()->session()->flash('success','Successfully Update user');
+        }
+        else{
+            request()->session()->flash('error','Error occurred while updating user');
+        }
+        return redirect()->route('users.index');
         //
     }
 
@@ -118,6 +148,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $delete=User::findorFail($id);
+        $status=$delete->delete();
+        if($status){
+            request()->session()->flash('success','User Successfully deleted');
+        }
+        else{
+            request()->session()->flash('error','There is an error while deleting users');
+        }
+        return redirect()->route('users.index');
         //
     }
 }

@@ -1,22 +1,45 @@
 @extends('backend.layouts.master')
-
+@section('title','E-SHOP || Banner Page')
 @section('main-content')
 
 <div class="card">
-    <h5 class="card-header">Edit User</h5>
+  <div class="col-md-12">
+    @if ($errors->any())
+
+    <div class="alert alert-danger">
+     <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{$error}}</li>
+
+          
+      @endforeach
+    </ul>
+  </div> 
+    @endif
+
+</div>
+    <h5 class="card-header">Add User</h5>
     <div class="card-body">
       <form method="post" action="{{route('users.update',$user->id)}}">
-        @csrf 
-        @method('PATCH')
+        {{csrf_field()}}
+        @method('patch')
         <div class="form-group">
-          <label for="inputTitle" class="col-form-label">Name</label>
-        <input id="inputTitle" type="text" name="name" placeholder="Enter name"  value="{{$user->name}}" class="form-control">
-        @error('name')
+          <label for="inputTitle" class="col-form-label">fullName</label>
+        <input id="inputTitle" type="text" name="full_name" placeholder="Enter name"  value="{{$user->full_name}}" class="form-control">
+        @error('fullName')
         <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
 
         <div class="form-group">
+          <label for="inputTitle" class="col-form-label">username</label>
+        <input id="inputTitle" type="text" name="username" placeholder="username"  value="{{$user->username}}" class="form-control">
+        @error('username')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+        </div>
+
+      <div class="form-group">
             <label for="inputEmail" class="col-form-label">Email</label>
           <input id="inputEmail" type="email" name="email" placeholder="Enter email"  value="{{$user->email}}" class="form-control">
           @error('email')
@@ -24,13 +47,30 @@
           @enderror
         </div>
 
-        {{-- <div class="form-group">
+
+        <div class="form-group">
+          <label for="inputaddress" class="col-form-label">Address</label>
+        <input id="inputaddress" type="address" name="address" placeholder="Enter Address"  value="{{$user->address}}" class="form-control">
+        @error('address')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+      </div>
+
+        <div class="form-group">
+          <label for="inputphone" class="col-form-label">phone</label>
+        <input id="inputphone" type="number" name="phone" placeholder="phone"  value="{{$user->phone}}" class="form-control">
+        @error('phone')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+      </div>
+
+        {{--<div class="form-group">
             <label for="inputPassword" class="col-form-label">Password</label>
-          <input id="inputPassword" type="password" name="password" placeholder="Enter password"  value="{{$user->password}}" class="form-control">
+          <input id="inputPassword" type="password" name="password" placeholder="Enter password"  value="{{old('password')}}" class="form-control">
           @error('password')
           <span class="text-danger">{{$message}}</span>
           @enderror
-        </div> --}}
+        </div>--}}
 
         <div class="form-group">
         <label for="inputPhoto" class="col-form-label">Photo</label>
@@ -47,18 +87,19 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
-        @php 
-        $roles=DB::table('users')->select('role')->where('id',$user->id)->get();
-        // dd($roles);
-        @endphp
+      {{--  @php 
+        $roles=DB::table('users')->select('role')->get();
+        @endphp--}}
         <div class="form-group">
             <label for="role" class="col-form-label">Role</label>
             <select name="role" class="form-control">
                 <option value="">-----Select Role-----</option>
-                @foreach($roles as $role)
-                    <option value="{{$role->role}}" {{(($role->role=='admin') ? 'selected' : '')}}>Admin</option>
-                    <option value="{{$role->role}}" {{(($role->role=='user') ? 'selected' : '')}}>User</option>
-                @endforeach
+                 {{-- @foreach($roles as $role)--}}
+                    <option value="admin" {{$user->role=='admin' ? 'selected' : ''}}>Admin</option>
+                    <option value="customer" {{$user->role=='customer' ? 'selected' : ''}}>customer</option>
+                    <option value="vendor" {{$user->role=='vendor' ? 'selected' : ''}}>vendor</option>
+
+               {{-- @endforeach--}}
             </select>
           @error('role')
           <span class="text-danger">{{$message}}</span>
@@ -67,15 +108,16 @@
           <div class="form-group">
             <label for="status" class="col-form-label">Status</label>
             <select name="status" class="form-control">
-                <option value="active" {{(($user->status=='active') ? 'selected' : '')}}>Active</option>
-                <option value="inactive" {{(($user->status=='inactive') ? 'selected' : '')}}>Inactive</option>
+              <option value="active" {{(($user->status=='active') ? 'selected' : '')}}>Active</option>
+              <option value="inactive" {{(($user->status=='inactive') ? 'selected' : '')}}>Inactive</option>
             </select>
           @error('status')
           <span class="text-danger">{{$message}}</span>
           @enderror
           </div>
         <div class="form-group mb-3">
-           <button class="btn btn-success" type="submit">Update</button>
+          <button class="btn btn-success" type="submit">Update</button>
+
         </div>
       </form>
     </div>
