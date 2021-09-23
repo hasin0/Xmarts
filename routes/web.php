@@ -4,8 +4,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
-
-
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +46,12 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
    
    //products section
    Route::resource('product',ProductController::class,['index']);
+
+   //users section
+
+   Route::resource('users',UserController::class,['index']);
+   //Route::post('user_status',UserController::class,['userStatus']);
+
 
 
 
