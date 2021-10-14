@@ -23,4 +23,8 @@ class Category extends Model
     public function child_cat(){
         return $this->hasMany('App\Models\Category','parent_id','id')->where('status','active');
     }
+
+    public function products(){
+        return $this->hasMany('App\Models\Product','cat_id','id');
+    }
 }

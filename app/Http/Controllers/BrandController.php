@@ -108,7 +108,7 @@ class BrandController extends Controller
         $brands=Brand::findOrFail($id);
         $this->validate($request,[
             'title'=>'nullable|string',
-            'photo'=>'required',
+            'photo'=>'nullable|exists',
             'status'=>'required|in:active,inactive',
 
         ]);

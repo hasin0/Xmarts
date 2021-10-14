@@ -3,6 +3,7 @@
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -19,13 +20,28 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// frontendsection
+
+Route::get('/',[\App\Http\Controllers\Frontend\IndexController::class,'home'])->name('home');
+
+//product Catergory
+Route::get('product-category/{slug}/',[\App\Http\Controllers\Frontend\IndexController::class,'productCartegory'])->name('product.category');
+//product catergory
+
+
+//product details
+Route::get('product-detail/{slug}/',[IndexController::class,'productDetail'])->name('product.detail');
+
+//endfrontendsection
+
+
+
+
+
 
 Auth::routes(['register'=>false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //admindashboard
 
