@@ -31,3 +31,12 @@
 <script src="{{asset('Frontends/js/easing.js')}}"></script>
 <!-- Active JS -->
 <script src="{{asset('Frontends/js/active.js')}}"></script>
+
+<script>
+    setTimeout(function() => {
+        $('#alert').slideUp();
+        
+    }, 4000);
+</script>
+
+@yield('scripts')

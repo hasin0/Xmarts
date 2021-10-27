@@ -28,7 +28,7 @@ class ProductFactory extends Factory
             'title'=>$this->faker->sentence(3,false),
             'slug'=>$this->faker->unique()->slug,
             'summary'=>$this->faker->text,
-            'photo'=>$this->faker->imageUrl(400,200),
+            'photo'=>$this->faker->imageUrl(100,100),
             'description'=>$this->faker->text,
             'stock'=>$this->faker->numberBetween(2,10),
             'brand_id'=>$this->faker->randomElement(Brand::pluck('id')->toArray()),

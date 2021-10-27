@@ -288,134 +288,63 @@
         
       
             
-        
+             
         <div class="row">
 
-            
+
             <div class="col-12">
                 <div class="owl-carousel popular-slider">
-                    <!-- Start Single Product -->
-                 @if(count($product->rel_prods)>0)
                     @foreach ($product->rel_prods as $item )
-                        
-                    
-                    <div class="single-product">
-                        <div class="product-img">
-                            <a href="product-details.html">
-                                @php 
-                                $photo=explode(',',$product->photo);
-                            // dd($photo);
-                                @endphp
-                                <img class="default-img" src="{{$photo[0]}}" alt="{{$item->title}}">
-                                {{--<img class="hover-img" src="images/products/p16.jpg" alt="#">--}}
-                                <span class="out-of-stock">{{$item->conditions}}</span>
-                            </a>
-                            <div class="button-head">
-                                <div class="product-action">
-                                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                    <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                    <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
-                                </div>
-                                <div class="product-action-2">
-                                    <a title="Add to cart" href="#">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h3><a href="{{route('product.detail',$item->slug)}}">{{$item->title}}</a></h3>
-                            <p>{{\App\Models\Brand::where('id',$item->brand_id)->value('title')}}</p>
-                          <div class="product-price">
-                              <span>${{number_format($item->offer_price,2)}} <small><del class="text-danger ">${{number_format($item->price,2)}}</del></small></span>
-                          </div>
-                        </div>
-                    </div>
-                  
-                    <!-- End Single Product -->
-                    <!-- Start Single Product -->
-                   {{-- <div class="single-product">
-                        <div class="product-img">
-                            <a href="product-details.html">
-                                <img class="default-img" src="images/products/p1.jpg" alt="#">
-                                <img class="hover-img" src="images/products/p2.jpg" alt="#">
-                            </a>
-                            <div class="button-head">
-                                <div class="product-action">
-                                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                    <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                    <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
-                                </div>
-                                <div class="product-action-2">
-                                    <a title="Add to cart" href="#">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h3><a href="product-details.html">Women Hot Collection</a></h3>
-                            <div class="product-price">
-                                <span>$50.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-img">
-                            <a href="product-details.html">
-                                <img class="default-img" src="images/products/p3.jpg" alt="#">
-                                <img class="hover-img" src="images/products/p4.jpg" alt="#">
-                                <span class="new">New</span>
-                            </a>
-                            <div class="button-head">
-                                <div class="product-action">
-                                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                    <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                    <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
-                                </div>
-                                <div class="product-action-2">
-                                    <a title="Add to cart" href="#">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h3><a href="product-details.html">Awesome Pink Show</a></h3>
-                            <div class="product-price">
-                                <span>$50.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-img">
-                            <a href="product-details.html">
-                                <img class="default-img" src="images/products/p5.jpg" alt="#">
-                                <img class="hover-img" src="images/products/p6.jpg" alt="#">
-                            </a>
-                            <div class="button-head">
-                                <div class="product-action">
-                                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                    <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                    <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
-                                </div>
-                                <div class="product-action-2">
-                                    <a title="Add to cart" href="#">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h3><a href="product-details.html">Awesome Bags Collection</a></h3>
-                            <div class="product-price">
-                                <span>$50.00</span>
-                            </div>
-                        </div>
-                    </div>--}}
 
+                        @if(count($product->rel_prods)>0)
+
+                        
+                    <!-- Start Single Product -->
+
+                            
+                            <div class="single-product">
+                                <div class="product-img">
+                                    <a href="product-details.html">
+                                        @php
+											$photo=explode(',',$item->photo);
+									     @endphp
+
+                                        <img class="default-img" src="{{$photo[0]}}" alt="{{$item->title}}">
+
+                                        <span class="out-of-stock">{{$item->condition}}</span>
+                                    </a>
+                                    <div class="button-head">
+                                        <div class="product-action">
+                                            <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                            <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
+                                            <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                                        </div>
+                                        <div class="product-action-2">
+                                            <a title="Add to cart" href="#">Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-content">
+                                    <h3><a href="{{route('product.detail',$item->slug)}}">{{$item->title}}</a></h3>
+										  <p>{{\App\Models\Brand::where('id',$item->brand_id)->value('title')}}</p>
+										<div class="product-price">
+											<span>${{number_format($item->offer_price,2)}} <small><del class="text-danger ">${{number_format($item->price,2)}}</del></small></span>
+										</div>
+                                </div>
+                            </div>
+
+                            
+
+                            @endif
+                         @endforeach
                     <!-- End Single Product -->
+                  
                 </div>
-                @endforeach
-                @endif
             </div>
+
         </div>
+
+
 
       
     </div>

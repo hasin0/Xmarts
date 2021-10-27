@@ -34,7 +34,19 @@ Route::get('product-detail/{slug}/',[IndexController::class,'productDetail'])->n
 
 //endfrontendsection
 
+//user auth
+Route::get('user/login',[\App\Http\Controllers\Frontend\IndexController::class,'login'])->name('login.form');
+Route::post('user/login',[\App\Http\Controllers\Frontend\IndexController::class,'loginSubmit'])->name('login.submit');
 
+Route::get('user/register',[\App\Http\Controllers\Frontend\IndexController::class,'register'])->name('register.form');
+Route::post('user/register',[\App\Http\Controllers\Frontend\IndexController::class,'registerSubmit'])->name('register.submit');
+
+Route::get('user/logout',[\App\Http\Controllers\Frontend\IndexController::class,'logout'])->name('user.logout');
+
+
+
+
+//end user auth
 
 
 
@@ -45,7 +57,7 @@ Auth::routes(['register'=>false]);
 
 //admindashboard
 
-Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
+Route::group(['prefix'=>'admin','middleware'=>'auth','admin'],function(){
 
     Route::get('/',[\App\Http\Controllers\AdminController::class,'admin'])->name('admin');
     //banners
@@ -77,3 +89,9 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
 //Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::group(['prefix'=>'seller','middleware'=>'auth','seller'],function(){
+
+    Route::get('/',[\App\Http\Controllers\AdminController::class,'admin'])->name('seller');
+});

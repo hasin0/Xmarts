@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'phone'=>$this->faker->phoneNumber,
             'address'=>$this->faker->address,
-            'role'=>$this->faker->randomElement(['admin','vendor','customer']),
+            'role'=>$this->faker->randomElement(['admin','seller','customer']),
             'status'=>$this->faker->randomElement(['active','inactive']),
             'photo'=>$this->faker->imageUrl(60,60),
             'remember_token' => Str::random(10),

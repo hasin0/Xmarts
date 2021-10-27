@@ -22,7 +22,15 @@
 	
 	<!-- Header -->
 	@include('frontend.layouts.header')
+
+
 	<!--/ End Header -->
+<div class="row">
+	<div class="col-md-12">
+		@include('backend.layouts.notification')
+	</div>
+
+</div>
 	
 	@yield('content') 
     

@@ -16,6 +16,6 @@ class Product extends Model
 
     public function rel_prods()
     {
-        return $this->hasMany('App\Models\Product','cat_id','cat_i')->where('status','active')->limit(10);
+        return $this->hasMany('App\Models\Product','cat_id','cat_id')->where('status','active')->limit(10);
     }
 }

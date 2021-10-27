@@ -30,11 +30,11 @@ class UserTablerSeeder extends Seeder
 
             //vendor
             [
-                'full_name'=>'ummi vendor',
+                'full_name'=>'ummi seller',
                 'username'=>'vendor',
                 'email'=>'vendor@gmail.com',
                 'password'=>Hash::make('2222'),
-                'role'=>'vendor',
+                'role'=>'seller',
                 'status'=>'active,'
 
             ],

@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
+//use Hash;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class IndexController extends Controller
 {
@@ -20,12 +26,53 @@ class IndexController extends Controller
     }
 
             //product catergory
-    public function productCartegory($slug)
+    public function productCartegory(Request $request,$slug)
     {
 
         $categories=Category::with('products')->where('slug',$slug)->first();
       // dd($categories);
-        return view('frontend.pages.product.product-category',compact(['categories']));
+    //  return $request->all();
+         $sort='';
+
+         if($request->sort !=null){
+             $sort=$request->sort;
+         }
+
+         if($categories==null)
+         {
+             return view('errors.404');
+         }
+         else{
+             if($sort=='priceAsc'){
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('offer_price','ASC')->paginate(12); 
+             }
+             elseif($sort=='priceDesc'){
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('offer_price','DESC')->paginate(12); 
+            }
+            elseif($sort=='discAsc'){
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('price','ASC')->paginate(12); 
+            }
+            elseif($sort=='discDesc'){
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('price','DESC')->paginate(12); 
+            }
+            elseif($sort=='titleAsc'){
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('title','ASC')->paginate(12); 
+            }
+            elseif($sort=='titleDesc'){
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('title','DESC')->paginate(12); 
+            }
+            else{
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->paginate(12);
+            }
+         }
+
+
+
+
+
+
+      $route='product-category';
+        return view('frontend.pages.product.product-category',compact(['categories','route','product']));
         //dd($slug);
     }
 
@@ -35,16 +82,97 @@ class IndexController extends Controller
     public function productDetail($slug)
     {
         $product=Product::with('rel_prods')->where('slug',$slug)->first();
-       // dd($product);
+   
         if($product)
         {
             //dd($product);
             return view('frontend.pages.product.product-detail',compact(['product',$product]));
         }
         else{
-            return 'no product found';
+            return view ('errors.404');
         }
         return $slug;
+    }
+
+    //user auth
+    public function login()
+    {
+        return view('frontend.auth.login');
+    }
+
+    public function loginSubmit(Request $request)
+    {
+        //return $request->all();
+        $this->validate($request,[
+            'email'=>'email|required|exists:users,email',
+            'password'=>'required|min:4',
+        ]);
+
+        $data=$request->all();
+        if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>'active'])){
+            
+            Session::put('user',$data['email']);
+            
+
+            if(Session::get('url.intended')){
+                return Redirect::to(Session::get('url.intended'));
+            }else{
+                request()->session()->flash('success','Successfully login');
+
+                return redirect()->route('home')->with('sucess','successuflly login');
+            }
+
+        }
+        else{
+            return back()->with('error','invalid email & password');
+        }
+
+    }
+
+
+    public function register()
+    {
+        return view('frontend.auth.register');
+    }
+
+
+    public function registerSubmit(Request $request){
+        // return $request->all();
+        $this->validate($request,[
+            'username'=>'string|required|max:30',
+            'email'=>'string|required|unique:users,email',
+            'password'=>'required|min:4|confirmed',
+        ]);
+        $data=$request->all();
+        // dd($data);
+        $check=$this->create($data);
+        dd($check);
+        Session::put('user',$data['email']);
+        if($check){
+            request()->session()->flash('success','Successfully registered');
+            return redirect()->route('home');
+        }
+        else{
+            request()->session()->flash('error','Please try again!');
+            return back();
+        }
+    }
+
+    public function create(array $data){
+        return User::create([
+            'username'=>$data['username'],
+            'email'=>$data['email'],
+            'password'=>Hash::make($data['password']),
+            //'status'=>'active'
+            ]);
+    }
+
+
+    public function logout(){
+        Session::forget('user');
+        Auth::logout();
+        request()->session()->flash('success','Logout successfully');
+        return back();
     }
 
 }

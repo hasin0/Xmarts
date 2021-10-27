@@ -142,9 +142,16 @@
 										</div>
 										<div class="single-shorter">
 											<label>Sort By :</label>
-											<select>
-												<option selected="selected">Name</option>
-												<option>Price</option>
+											<select id="sortBy">
+												<option selected="selected">Default Sort</option>
+												<option value="priceAsc">Price-Lower To Higher</option>
+												<option value="priceDesc">Price-Higher To Lower</option>
+												<option value="titleAsc">Alphabetical Ascending</option>
+												<option value="titleDesc">Alphabetical Descending</option>
+												<option value="discAsc">Discount-Lower To Higher</option>
+												<option value="discDesc">Discount-Higher To Lower</option>
+
+
 												<option>Size</option>
 											</select>
 										</div>
@@ -162,51 +169,22 @@
 						
 							
 						{{--single product--}}
-						  @if(count($categories->products)>0)
-						      @foreach ($categories->products as $item)
-								  
-							  
-							<div class="col-lg-4 col-md-6 col-12">
-								<div class="single-product">
-									<div class="product-img">
-										{{-- product image--}}
-									
-										<a href="product-details.html">
-											@php
-											$photo=explode(',',$item->photo);
-										    @endphp
-											<img class="default-img" src="{{$photo[0]}}" alt="#">
-											{{--<img class="hover-img" src="{{$photo[1]}}" alt="#">--}}
-											<span class="new">{{$item->condition}}</span>
-										</a>
-										<div class="button-head">
-											<div class="product-action">
-												<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-												<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-												<a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
-											</div>
-											<div class="product-action-2">
-												<a title="Add to cart" href="#">Add to cart</a>
-											</div>
-										</div>
-									</div>
-									<div class="product-content">
-										<h3><a href="{{route('product.detail',$item->slug)}}">{{$item->title}}</a></h3>
-										  <p>{{\App\Models\Brand::where('id',$item->brand_id)->value('title')}}</p>
-										<div class="product-price">
-											<span>${{number_format($item->offer_price,2)}} <small><del class="text-danger ">${{number_format($item->price,2)}}</del></small></span>
-										</div>
-									</div>
-								</div>
-							</div>
-							  @endforeach
-							@else
-							   <p>no product found</p>
+					  @include('frontend\layouts\single-product')
 
-						  @endif
+						 
 
 							{{--single product--}}
 						</div>
+						<div   class="ajax-load " style="text-align: center, display:none ">
+
+
+						</div>
+
+						
+						<div class="d-flex align-items-center justify-content-center" style="height: 350px">
+							<img src="{{asset('Frontends/images/ll.gif')}}" style="width:10%" alt="">
+
+						  </div>
 					</div>
 				</div>
 			</div>
@@ -331,5 +309,37 @@
 
 
 
+
+@endsection
+
+@section('scripts')
+
+<script>
+$('#sortBy').change(function(){
+	var sort=$('#sortBy').val();
+	//alert(sort);
+	window.location="{{url(''.$route.'')}}/{{$categories->slug}}?sort="+sort;
+
+});
+
+</script>
+
+<script>
+
+	function loadmoredata(page){
+		$.ajax({
+			url:'?page='+page,
+			type:'get',
+			beforesendata:function(){
+				$('.ajax-load').show();
+			},
+			.done(function name( data) {
+
+				//console.log(data)
+				
+			})
+		})
+	}
+</script>
 
 @endsection

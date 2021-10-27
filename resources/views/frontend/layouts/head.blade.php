@@ -44,3 +44,5 @@
 <link rel="stylesheet" href="{{asset('Frontends/css/reset.css')}}">
 <link rel="stylesheet" href="{{asset('Frontends/style.css')}}">
 <link rel="stylesheet" href="{{asset('Frontends/css/responsive.css')}}">
+
+@yield('styles')

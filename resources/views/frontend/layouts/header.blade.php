@@ -16,11 +16,18 @@
                 <div class="col-lg-8 col-md-12 col-12">
                     <!-- Top Right -->
                     <div class="right-content">
+                        @auth 
+
                         <ul class="list-main">
                             <li><i class="ti-location-pin"></i> Store location</li>
                             <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
                             <li><i class="ti-user"></i> <a href="#">My account</a></li>
-                            <li><i class="ti-power-off"></i><a href="{{ route('login') }}">Login</a></li>
+                            <li><i class="ti-power-off"></i><a href="{{route('user.logout')}}">Logout /</a> </li>
+
+                            @else
+                            <li><i class="ti-power-off"></i><a href="{{route('login.form')}}">Login /</a> <a href="{{route('register.form')}}">Register</a></li>
+
+                            @endauth
 
                         </ul>
                     </div>
@@ -121,10 +128,11 @@
         <div class="container">
             <div class="cat-nav-head">
                 <div class="row">
+
                     <div class="col-lg-3">
                         <div class="all-category">
                             <h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORIES</h3>
-                            <ul class="main-category">
+                         {{--  <ul class="main-category">
                                 <li><a href="#">New Arrivals <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                                     <ul class="sub-category">
                                         <li><a href="#">accessories</a></li>
@@ -186,17 +194,22 @@
                                 <li><a href="#">ladies</a></li>
                                 <li><a href="#">westrn dress</a></li>
                                 <li><a href="#">denim </a></li>
-                            </ul>
+                            </ul> --}} 
                         </div>
                     </div>
+                  
                     <div class="col-lg-9 col-12">
+
+                        
                         <div class="menu-area">
                             <!-- Main Menu -->
                             <nav class="navbar navbar-expand-lg">
                                 <div class="navbar-collapse">	
+                                    
                                     <div class="nav-inner">	
+                                        
                                         <ul class="nav main-menu menu navbar-nav">
-                                                <li class="active"><a href="#">Home</a></li>
+                                                <li class="active"><a href="{{route('home')}}">Home</a></li>
                                                 <li><a href="#">Product</a></li>												
                                                 <li><a href="#">Service</a></li>
                                                 <li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
@@ -217,6 +230,7 @@
                                     </div>
                                 </div>
                             </nav>
+                            
                             <!--/ End Main Menu -->	
                         </div>
                     </div>
