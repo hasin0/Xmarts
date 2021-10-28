@@ -21,7 +21,7 @@
                         <ul class="list-main">
                             <li><i class="ti-location-pin"></i> Store location</li>
                             <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
-                            <li><i class="ti-user"></i> <a href="#">My account</a></li>
+                            <li><i class="ti-user"></i> <a href="{{route('user.dashboard')}}">My account</a></li>
                             <li><i class="ti-power-off"></i><a href="{{route('user.logout')}}">Logout /</a> </li>
 
                             @else

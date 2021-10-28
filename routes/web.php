@@ -95,3 +95,9 @@ Route::group(['prefix'=>'seller','middleware'=>'auth','seller'],function(){
 
     Route::get('/',[\App\Http\Controllers\AdminController::class,'admin'])->name('seller');
 });
+
+//user dashboard
+Route::group(['prefix'=>'user'],function(){
+    Route::get('/dashboard',[\App\Http\Controllers\Frontend\IndexController::class,'userDashboard'])->name('user.dashboard');
+
+});

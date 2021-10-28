@@ -72,7 +72,14 @@ class IndexController extends Controller
 
 
       $route='product-category';
-        return view('frontend.pages.product.product-category',compact(['categories','route','product']));
+      return view('frontend.pages.product.product-category',compact(['categories','route','product']));
+
+     // if($request->ajax())
+     
+       //   $view=view('frontend.layouts.single_product',compact('product'))->render();
+         // return response()->json(['html'=>$view]);
+
+      //}
         //dd($slug);
     }
 
@@ -173,6 +180,15 @@ class IndexController extends Controller
         Auth::logout();
         request()->session()->flash('success','Logout successfully');
         return back();
+    }
+
+
+
+    public function userDashboard(){
+
+        $user=Auth::user();
+       // dd($user);
+        return view('frontend.user.dashboard',compact('user'));
     }
 
 }

@@ -3,7 +3,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; <a href="https://github.com/hasin0" target="_blank">HASSAN</a> 2020</span>
+            <span>Copyright &copy; <a href="https://github.com/hasin0" target="_blank">Hassan</a> 2020</span>
           </div>
         </div>
       </footer>
@@ -54,7 +54,7 @@
 
   <!-- Page level custom scripts -->
   {{-- <script src="{{asset('backend/js/demo/chart-area-demo.js')}}"></script> --}}
-  {{-- <script src="{{asset('backend/js/demo/chart-pie-demo.js')}}"></script> --}}
+  <script src="{{asset('backend/js/demo/chart-pie-demo.js')}}"></script>
 
   @stack('scripts')
 
