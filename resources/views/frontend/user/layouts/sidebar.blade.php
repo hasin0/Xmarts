@@ -12,7 +12,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li       class="nav-item active"   class="{{\Request::is('user/dashboard')?'active' :''}}">
       <a class="nav-link" href="{{route('user.dashboard')}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
@@ -26,15 +26,35 @@
             Shop
         </div>
     <!--Orders -->
-   {{-- <li class="nav-item">
-       <a class="nav-link" href="{{route('user.order.index')}}">
+    <li class="nav-item"   class="{{\Request::is('user/order')?'active' :''}}">
+       <a class="nav-link" href="{{route('user.order')}}">
             <i class="fas fa-hammer fa-chart-area"></i>
             <span>Orders</span>
         </a>
     </li>
 
+
+
+     <!--address -->
+     <li    class="nav-item"    class="{{\Request::is('user/address')?'active' :''}}">
+      <a class="nav-link" href="{{route('user.address')}}">
+           <i class="fas fa-hammer fa-chart-area"></i>
+           <span>Address</span>
+       </a>
+   </li>
+
+
+      <!--profile -->
+      <li class="nav-item"   class="{{\Request::is('user/account-detail')?'active' :''}}">
+        <a class="nav-link" href="{{route('user.account')}}">
+             <i class="fas fa-hammer fa-chart-area"></i>
+             <span>Profile</span>
+         </a>
+     </li>
+  
+
     <!-- Reviews -->
-    <li class="nav-item">
+    {{--<li class="nav-item">
         <a class="nav-link" href="{{route('user.productreview.index')}}">
             <i class="fas fa-comments"></i>
             <span>Reviews</span></a>

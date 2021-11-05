@@ -191,4 +191,45 @@ class IndexController extends Controller
         return view('frontend.user.dashboard',compact('user'));
     }
 
+    public function userOrder(){
+        $user=Auth::user();
+        return view('frontend.user.order',compact('user'));
+    }
+
+    public function userAddress(){
+        $users=Auth::user();
+        //$users=User::orderBy('id','ASC')->paginate(10);
+        return view('frontend.user.address',compact('users'));
+    }
+
+
+    public function userAccount(){
+        $user=Auth::user();
+        return view('frontend.user.account',compact('user'));
+    }
+
+    public function billingAddress(Request $request, $id)
+    { $users=User::where('id',$id)->update(['country'=>$request->country,
+        'city'=>$request->city,
+        'postcode'=>$request->postcode,
+        'address'=>$request->address,
+        'state'=>$request->state]);
+
+        if($users)
+        {
+            return back()->with('success','address successfully updated');
+        }else{
+
+            return back()->with('error','something is wrong');
+
+
+        }
+
+        return view('frontend.user.address')->with('users',$users,'id',$id);
+
+
+
+
+
+    }
 }

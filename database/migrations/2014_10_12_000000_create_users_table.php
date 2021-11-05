@@ -29,6 +29,21 @@ class CreateUsersTable extends Migration
           //  $table->string('provider')->nullable();
             //$table->string('provider_id')->nullable();
             $table->enum('status',['active','inactive'])->default('active');
+
+
+           
+
+
+
+
+
+
+
+
+
+
+
+
             $table->rememberToken()->nullable();
             $table->timestamps();
         });
