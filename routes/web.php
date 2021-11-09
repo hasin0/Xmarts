@@ -103,7 +103,22 @@ Route::group(['prefix'=>'user'],function(){
     Route::get('/address',[\App\Http\Controllers\Frontend\IndexController::class,'userAddress'])->name('user.address');
     Route::get('/account-detail',[\App\Http\Controllers\Frontend\IndexController::class,'userAccount'])->name('user.account');
 
-    Route::post('/billing/address',[\App\Http\Controllers\Frontend\IndexController::class,'billingAddress'])->name('billing.address');
+    Route::post('/billing/address/{id}',[\App\Http\Controllers\Frontend\IndexController::class,'billingAddress'])->name('billing.address');
+
+    Route::post('/shipping/address/{id}',[\App\Http\Controllers\Frontend\IndexController::class,'shippingAddress'])->name('shipping.address');
+    Route::post('/update/account/{id}',[\App\Http\Controllers\Frontend\IndexController::class,'updateAccount'])->name('update.account');
+     
+
+    Route::get('/change-password',[\App\Http\Controllers\Frontend\IndexController::class,'changePassword'])->name('user.passwordform');
+      
+
+    Route::post('/change-password',[\App\Http\Controllers\Frontend\IndexController::class,'changPasswordStore'])->name('change.password');
+
+
+  //  Route::get('change-password', 'HomeController@changePassword')->name('user.change.password.form');
+ // Route::post('change-password', 'HomeController@changPasswordStore')->name('change.password');
+
+
 
 
 

@@ -8,6 +8,8 @@ use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use App\Rules\MatchOldPassword;
+
 //use Hash;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -153,7 +155,6 @@ class IndexController extends Controller
         $data=$request->all();
         // dd($data);
         $check=$this->create($data);
-        dd($check);
         Session::put('user',$data['email']);
         if($check){
             request()->session()->flash('success','Successfully registered');
@@ -209,7 +210,10 @@ class IndexController extends Controller
     }
 
     public function billingAddress(Request $request, $id)
-    { $users=User::where('id',$id)->update(['country'=>$request->country,
+    { 
+
+        
+        $users=User::where('id',$id)->update(['country'=>$request->country,
         'city'=>$request->city,
         'postcode'=>$request->postcode,
         'address'=>$request->address,
@@ -225,11 +229,96 @@ class IndexController extends Controller
 
         }
 
-        return view('frontend.user.address')->with('users',$users,'id',$id);
+       //shippingAddress return view('frontend.user.address')->with('users',$users,'id',$id);
 
 
 
 
 
     }
+
+
+
+
+
+
+
+
+    public function shippingAddress(Request $request, $id)
+    { 
+
+        
+        $users=User::where('id',$id)->update(['scountry'=>$request->scountry,
+        'scity'=>$request->scity,
+        'spostcode'=>$request->spostcode,
+        'saddress'=>$request->saddress,
+        'sstate'=>$request->sstate]);
+
+        if($users)
+        {
+            return back()->with('success','address successfully updated');
+        }else{
+
+            return back()->with('error','something is wrong');
+
+
+        }
+
+       // return view('frontend.user.address')->with('users',$users,'id',$id);
+
+
+
+
+
+    }
+
+                public function updateAccount(Request $request, $id)
+                {
+
+                    $user=User::findOrFail($id);
+                    $data=$request->all();
+                    $status=$user->fill($data)->save();
+                    if($status){
+                        request()->session()->flash('success','Successfully updated your profile');
+                    }
+                    else{
+                        request()->session()->flash('error','Please try again!');
+                    }
+                    return redirect()->back();
+                  
+
+
+
+
+                   
+                   
+
+                }
+
+
+                public function changePassword(){
+                
+                
+                
+                    return view('frontend.user.layouts.userPasswordChange');
+                }
+
+
+
+
+                public function changPasswordStore(Request $request)
+                {
+                    $request->validate([
+                        'current_password' => ['required', new MatchOldPassword],
+                        'new_password' => ['required'],
+                        'new_confirm_password' => ['same:new_password'],
+                    ]);
+               
+                    User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+               
+                    return redirect()->route('user.account')->with('success','Password successfully changed');
+                }
+
+
+
 }

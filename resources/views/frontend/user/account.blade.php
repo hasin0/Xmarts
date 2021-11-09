@@ -32,11 +32,13 @@
                       <h5 class="card-title text-left"><small><i class="fas fa-user"></i> {{$user->name}}</small></h5>
                       <p class="card-text text-left"><small><i class="fas fa-envelope"></i> {{$user->email}}</small></p>
                       <p class="card-text text-left"><small class="text-muted"><i class="fas fa-hammer"></i> {{$user->role}}</small></p>
+                                            <p class="card-text text-left"><small class="text-muted"><i class="fas fa-hammer"></i> {{$user->role}}</small></p>
+
                     </div>
                   </div>
             </div>
             <div class="col-md-8">
-                <form class="border px-4 pt-2 pb-3" method="POST" >{{--action="{{route('user-user-update',$user->id)}}"--}}
+                <form class="border px-4 pt-2 pb-3" method="POST" action="{{route('update.account',$user->id)}}" >{{----}}
                     @csrf
                     <div class="form-group">
 
@@ -87,7 +89,41 @@
 
 
 
-                      <div class="form-group">
+                      {{--  <div class="form-group">
+                        <label for="password" class="col-form-label">Current Password </label>
+                      <input id="password"   type="password" name="oldpassword" placeholder="Current Password"  value="{{$user->password}}" class="form-control" >
+                      @error('password')
+                      <span class="text-danger">{{$message}}</span>
+                      @enderror
+                    </div>
+
+
+
+
+
+                    
+                    <div class="form-group">
+                      <label for="newpassword" class="col-form-label"> New Password </label>
+                    <input id="newpassword"  type="newpassword" name="newpassword" placeholder="New Password"  value="{{$user->password}}" class="form-control" >
+                    @error('newpassword')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="form-group">
                         <label for="inputTitle" class="col-form-label"> Billing Address</label>
                       <input id="inputTitle" type="text" name="address" placeholder="Enter address"  value="{{$user->address}}" class="form-control">
                       @error('address')
@@ -111,7 +147,7 @@
                       <div class="form-group">
                         <label for="inputTitle" class="col-form-label"> city</label>
                       <input id="inputTitle" type="text" name="city" placeholder="Enter city"  value="{{$user->city}}" class="form-control">
-                      @error('address')
+                      @error('city')
                       <span class="text-danger">{{$message}}</span>
                       @enderror
                       </div>
@@ -134,7 +170,7 @@
                       @error('postcode')
                       <span class="text-danger">{{$message}}</span>
                       @enderror
-                      </div>
+                      </div>--}}
 
                       
 

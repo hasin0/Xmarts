@@ -53,6 +53,15 @@
      </li>
   
 
+
+      <!--change password -->
+      <li class="nav-item"   class="{{\Request::is('user/change-password')?'active' :''}}">
+        <a class="nav-link" href="{{route('user.passwordform')}}">
+             <i class="fas fa-hammer fa-chart-area"></i>
+             <span>Change Password</span>
+         </a>
+     </li>
+
     <!-- Reviews -->
     {{--<li class="nav-item">
         <a class="nav-link" href="{{route('user.productreview.index')}}">

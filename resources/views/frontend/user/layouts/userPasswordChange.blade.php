@@ -1,4 +1,4 @@
-@extends('user.layouts.master')
+@extends('frontend.user.layouts.master')
 @section('main-content')
 <div class="container">
     <div class="row">
@@ -19,6 +19,9 @@
   
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="current_password" autocomplete="current-password">
+                                @error('Current password')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                         </div>
   
@@ -27,6 +30,9 @@
   
                             <div class="col-md-6">
                                 <input id="new_password" type="password" class="form-control" name="new_password" autocomplete="current-password">
+                                @error('new password')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                         </div>
   
@@ -35,6 +41,9 @@
     
                             <div class="col-md-6">
                                 <input id="new_confirm_password" type="password" class="form-control" name="new_confirm_password" autocomplete="current-password">
+                                @error('confirm new password')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                         </div>
    
