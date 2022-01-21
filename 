@@ -1,0 +1,25 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	new file:   app/Http/Controllers/BrandController.php
+#	modified:   app/Http/Controllers/CategoryController.php
+#	new file:   app/Models/Brand.php
+#	new file:   database/factories/BrandFactory.php
+#	new file:   database/migrations/2021_08_26_125003_create_brands_table.php
+#	modified:   database/seeders/DatabaseSeeder.php
+#	new file:   resources/views/backend/brand/create.blade.php
+#	new file:   resources/views/backend/brand/edit.blade.php
+#	new file:   resources/views/backend/brand/index.blade.php
+#	modified:   resources/views/backend/category/create.blade.php
+#	modified:   resources/views/backend/category/edit.blade.php
+#	modified:   resources/views/backend/layouts/sidebar.blade.php
+#	modified:   routes/web.php
+
+i
+:wq
+

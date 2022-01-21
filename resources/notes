@@ -1,0 +1,713 @@
+
+
+step 3 setup admin and item theme
+
+
+
+
+
+
+
+<div>
+                <span class="relative z-0 inline-flex shadow-sm rounded-md">
+                    
+                                            <span aria-disabled="true" aria-label="&amp;laquo; Previous">
+                            <span class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-l-md leading-5" aria-hidden="true">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </span>
+                        </span>
+                    
+                    
+                                            
+                        
+                        
+                                                                                                                        <span aria-current="page">
+                                        <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">1</span>
+                                    </span>
+                                                                                                                                <a href="http://xmarts.loc/admin/category?page=2" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="Go to page 2">
+                                        2
+                                    </a>
+                                                                                                        
+                    
+                                            <a href="http://xmarts.loc/admin/category?page=2" rel="next" class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md leading-5 hover:text-gray-400 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Next &amp;raquo;">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                                    </span>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="productID{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="#productID{{$product->id}}Label" aria-hidden="true">
+    <div class="modal-dialog-centered" role="document">
+
+      @php
+        $product=\App\Models\Product::where('id',$product->id)->first();
+      @endphp
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="productID{{$product->id}}Label">{{$product->title}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+</div> 
+
+
+
+
+
+
+<div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary float-left">brands
+         List</h6>
+      <a href="{{route('brand.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Banner</a>
+    </div>
+   
+<div class="card-body">
+  <div class="table-responsive">
+    <table class="table table-bordered" id="user-dataTable" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>S.N.</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Photo</th>
+          <th>Join Date</th>
+          <th>Role</th>
+          <th>phone</th>
+          <th>address</th>
+
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+            <th>S.N.</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Photo</th>
+            <th>Join Date</th>
+            <th>Role</th>
+            <th>phone</th>
+          <th>address</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+      </tfoot>
+      <tbody>
+        @foreach($users as $user)   
+            <tr>
+                <td>{{$user->id}}</td>
+                <td>{{$user->full_name}}</td>
+                <td>{{$user->email}}</td>
+                <td>
+                    @if($user->photo)
+                        <img src="{{$user->photo}}" class="img-fluid rounded-circle" style="max-width:50px" alt="{{$user->photo}}">
+                    @else
+                        <img src="{{asset('backend/img/avatar.png')}}" class="img-fluid rounded-circle" style="max-width:50px" alt="avatar.png">
+                    @endif
+                </td>
+                <td>{{(($user->created_at)? $user->created_at->diffForHumans() : '')}}</td>
+                <td>{{$user->role}}</td>
+                <td>{{$user->phone}}</td>
+                <td>{{$user->address}}</td>
+
+                <td>
+                    @if($user->status=='active')
+                        <span class="badge badge-success">{{$user->status}}</span>
+                    @else
+                        <span class="badge badge-warning">{{$user->status}}</span>
+                    @endif
+                </td>
+                <td>
+                    <a href="{{route('users.edit',$user->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                <form method="POST" action="{{route('users.destroy',[$user->id])}}">
+                  @csrf 
+                  @method('delete')
+                      <button class="btn btn-danger btn-sm dltBtn" data-id={{$user->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
+                {{-- Delete Modal --}}
+                {{-- <div class="modal fade" id="delModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="#delModal{{$user->id}}Label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="#delModal{{$user->id}}Label">Delete user</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form method="post" action="{{ route('users.destroy',$user->id) }}">
+                            @csrf 
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger" style="margin:auto; text-align:center">Parmanent delete user</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                </div> --}}
+            </tr>  
+        @endforeach
+      </tbody>
+    </table>
+    <span style="float:right">{{$users->links()}}</span>
+  </div>
+</div>
+</div>
+@endsection
+
+
+
+
+
+
+
+
+
+
+             'username'=>'string|required|max:30',
+            'full_name'=>'string|required|max:30',
+
+            'email'=>'string|required|unique:users',
+            'password'=>'string|required',
+            'role'=>'required|in:admin,vendor,customer',
+            'status'=>'required|in:active,inactive',
+            'photo'=>'nullable|string',
+            'phone'=>'nullable|string',
+
+            'address'=>'nullable|string',
+
+
+
+
+
+
+
+            @extends('backend.layouts.master')
+@section('title','E-SHOP || Banner Page')
+@section('main-content')
+
+<div class="card">
+    <h5 class="card-header">Add User</h5>
+    <div class="card-body">
+      <form method="post" action="{{route('users.store')}}">
+        {{csrf_field()}}
+        <div class="form-group">
+          <label for="inputTitle" class="col-form-label">Name</label>
+        <input id="inputTitle" type="text" name="name" placeholder="Enter name"  value="{{old('full_name')}}" class="form-control">
+        @error('name')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+        </div>
+
+        <div class="form-group">
+          <label for="inputTitle" class="col-form-label">username</label>
+        <input id="inputTitle" type="text" name="name" placeholder="username"  value="{{old('username')}}" class="form-control">
+        @error('name')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail" class="col-form-label">Email</label>
+          <input id="inputEmail" type="email" name="email" placeholder="Enter email"  value="{{old('email')}}" class="form-control">
+          @error('email')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+
+
+        <div class="form-group">
+          <label for="inputaddress" class="col-form-label">Address</label>
+        <input id="inputaddress" type="address" name="address" placeholder="Enter Address"  value="{{old('address')}}" class="form-control">
+        @error('address')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+      </div>
+
+        <div class="form-group">
+          <label for="inputphone" class="col-form-label">phone</label>
+        <input id="inputphone" type="phone" name="phone" placeholder="phone"  value="{{old('phone')}}" class="form-control">
+        @error('phone')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+      </div>
+
+        <div class="form-group">
+            <label for="inputPassword" class="col-form-label">Password</label>
+          <input id="inputPassword" type="password" name="password" placeholder="Enter password"  value="{{old('password')}}" class="form-control">
+          @error('password')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+
+        <div class="form-group">
+        <label for="inputPhoto" class="col-form-label">Photo</label>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                <i class="fa fa-picture-o"></i> Choose
+                </a>
+            </span>
+            <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}">
+        </div>
+        <img id="holder" style="margin-top:15px;max-height:100px;">
+          @error('photo')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+      {{--  @php 
+        $roles=DB::table('users')->select('role')->get();
+        @endphp--}}
+        <div class="form-group">
+            <label for="role" class="col-form-label">Role</label>
+            <select name="role" class="form-control">
+                <option value="">-----Select Role-----</option>
+                 {{-- @foreach($roles as $role)--}}
+                    <option value="admin" {{old('role')=='admin' ? 'selected' : ''}}>Admin</option>
+                    <option value="customer" {{old('role')=='customer' ? 'selected' : ''}}>customer</option>
+                    <option value="vendor" {{old('role')=='vendor' ? 'selected' : ''}}>vendor</option>
+
+               {{-- @endforeach--}}
+            </select>
+          @error('role')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+          </div>
+          <div class="form-group">
+            <label for="status" class="col-form-label">Status</label>
+            <select name="status" class="form-control">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+          @error('status')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+          </div>
+        <div class="form-group mb-3">
+          <button type="reset" class="btn btn-warning">Reset</button>
+           <button class="btn btn-success" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+</div>
+
+@endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@extends('frontend.user.layouts.master')
+
+@section('main-content')
+<div class="container-fluid">
+   @include('frontend.user.layouts.notification')
+    <!-- Page Heading -->
+  
+  
+    <div class="row">
+        {{-- @php
+             $orders=DB::table('orders')->where('user_id',auth()->user()->id)->paginate(10);
+         @endphp--}}
+         <!-- Order -->
+         <div class="col-xl-12 col-lg-12">
+           <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
+             <thead>
+               <tr>
+                 <th>S.N.</th>
+                 <th>Order No.</th>
+                 <th>  Billing address</th>
+                 <th>  Shipping address</th>
+                               <th>Action</th>
+
+
+             
+               </tr>
+             </thead>
+             {{--
+             <tfoot>
+               <tr>
+                 <th>S.N.</th>
+                 <th>Order No.</th>
+                 <th>Name</th>
+                 <th>Email</th>
+                 <th>Quantity</th>
+                 <th>Total Amount</th>
+                 <th>Status</th>
+                 <th>Action</th>
+                 </tr>
+             </tfoot>
+           --}}
+             <tbody>
+              {{-- @if(count($orders)>0)
+                 @foreach($orders as $order)   
+                   <tr>
+                       <td>{{$order->id}}</td>
+                       <td>{{$order->order_number}}</td>
+                       <td>{{$order->first_name}} {{$order->last_name}}</td>
+                       <td>{{$order->email}}</td>
+                       <td>{{$order->quantity}}</td>
+                       <td>${{number_format($order->total_amount,2)}}</td>
+                       <td>
+                           @if($order->status=='new')
+                             <span class="badge badge-primary">{{$order->status}}</span>
+                           @elseif($order->status=='process')
+                             <span class="badge badge-warning">{{$order->status}}</span>
+                           @elseif($order->status=='delivered')
+                             <span class="badge badge-success">{{$order->status}}</span>
+                           @else
+                             <span class="badge badge-danger">{{$order->status}}</span>
+                           @endif
+                       </td>
+                       <td>
+                           <a href="{{route('user.order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
+                           <form method="POST" action="{{route('user.order.delete',[$order->id])}}">
+                             @csrf 
+                             @method('delete')
+                                 <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                           </form>
+                       </td>
+                   </tr>  
+                 @endforeach
+                 @else
+                   <td colspan="8" class="text-center"><h4 class="my-4">You have no order yet!! Please order some products</h4></td>
+                 @endif--}}
+             </tbody>
+           </table>
+   
+         {{--  {{$orders->links()}}--}}
+         </div>
+       </div>
+   
+     </div>
+   @endsection
+
+
+
+
+
+
+
+
+
+
+
+   <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>S.N.</th>
+              <th>Order No.</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Quantity</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          {{--
+          <tfoot>
+            <tr>
+              <th>S.N.</th>
+              <th>Order No.</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Quantity</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+              </tr>
+          </tfoot>
+        --}}
+          <tbody>
+           {{-- @if(count($orders)>0)
+              @foreach($orders as $order)   
+                <tr>
+                    <td>{{$order->id}}</td>
+                    <td>{{$order->order_number}}</td>
+                    <td>{{$order->first_name}} {{$order->last_name}}</td>
+                    <td>{{$order->email}}</td>
+                    <td>{{$order->quantity}}</td>
+                    <td>${{number_format($order->total_amount,2)}}</td>
+                    <td>
+                        @if($order->status=='new')
+                          <span class="badge badge-primary">{{$order->status}}</span>
+                        @elseif($order->status=='process')
+                          <span class="badge badge-warning">{{$order->status}}</span>
+                        @elseif($order->status=='delivered')
+                          <span class="badge badge-success">{{$order->status}}</span>
+                        @else
+                          <span class="badge badge-danger">{{$order->status}}</span>
+                        @endif
+                    </td>
+                    <td>
+                        <a href="{{route('user.order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
+                        <form method="POST" action="{{route('user.order.delete',[$order->id])}}">
+                          @csrf 
+                          @method('delete')
+                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>  
+              @endforeach
+              @else
+                <td colspan="8" class="text-center"><h4 class="my-4">You have no order yet!! Please order some products</h4></td>
+              @endif--}}
+          </tbody>
+        </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        //$users=User::orderBy('id','ASC')->paginate(10);
+        $user=User::findOrFail($id);
+
+
+
+        $user=User::where('id',$id)->update(['country'=>$request->country,
+        'city'=>$request->city,
+        'postcode'=>$request->postcode,
+        'address'=>$request->address,
+        'state'=>$request->state]);
+
+        if($user)
+        {
+            return back()->with('success','address successfully updated');
+        }else{
+
+            return back()->with('error','something is wrong');
+
+
+        }
+
+        return view('frontend.user.address')->with('users',$user,'id',$id);
+
+
+
+
+
+
+
+          
+        <div class="row">
+                              <div class="col-md-6">
+        
+                                <strong>Name:</strong>
+    
+                                <h5 class="modal-title" id="userID{{$user->id}}Label">{{$user->full_name}}</h5>
+    
+                               
+                              </div>
+                             </div>
+                         
+        
+                            <div class="row">
+                              <div class="col-md-6">
+        
+                                <strong>email:</strong>
+                                <p>{{$user->email}}</p>
+                              </div>
+                             </div>
+        
+                             <div class="row">
+                              <div class="col-md-6">
+        
+                             
+                            <strong>address:</strong>
+                            <p>{{$user->address}}</p>
+                              </div>
+                             </div>
+        
+                             <div class="row">
+                              <div class="col-md-4">
+        
+                                <strong>phone:</strong>
+                                <p>{{$user->phone}}</p>
+                              </div>
+                             </div>
+        
+                          
+        
+        
+        
+        
+        
+        
+        
+                             
+                             <div class="row">
+                              <div class="col-md-6">
+        
+                                <strong>Role:</strong>
+                                <p>{{$user->role}}</p>
+                              </div>
+                             </div>
+        
+                             
+                            
+        
+                         
+                             <div class="row">
+                              <div class="col-md-6">
+        
+                                <strong>status:</strong>
+                                <p>{{$user->status}}</p>
+                              </div>
+                             </div>
+                         
+
+
+
+
+
+
+
+
+	
+                             <script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	$(document).on('click','.cart_delete',function (e) {
+		e.preventDefault();
+		var cart_id=$(this).data('id');
+		alert(cart_id);
+		var token="{{csrf_token()}}";
+		var path="{{route('cart.store')}}";
+
+		$.ajax({
+			url:path,
+			type:"POST",
+			dataType:"JSON",
+			data:{
+				cart_id:cart_id,
+				_token:token,
+			},
+		    
+				success:function(data){
+					console.log(data);
+					
+
+					if(data['status']){
+
+						$('body #header-ajax').html(data['header']); 
+					   $('body #cart-counter').html(data['cart-counter']); 
+						
+
+						swal({
+									title: "Good job!",
+									text: data['message'],
+									icon: "success",
+									button: "OK",
+							});
+
+					}
+				
+				},
+				error:function(err){
+						console.log(err);
+					}
+		});
+		
+	});
+
+		//alert(cart_id);
+
+		
+		//var product_qty=$(this).data('quantity');
+		//alert(product_qty);
+
+		//alert(product_id);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+										<li>Cart Subtotal<span>${{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</span></li>
+										<li>Shipping<span>${{number_format(\Illuminate\Support\Facades\Session::get('checkout')[0]['delivery_charge'],2)}}</span></li>
+										 @if(session()->has('coupon'))
+										<li>You Save<span>${{number_format(Session::get('coupon')['value'],2)}}</span></li>
+										@endif
+										
+
+										@if(session()->has('coupon'))
+                                        <li class="last">You Pay<span>${{(float) str_replace(',','',\Gloudemans\Shoppingcart\Facades\Cart::subtotal())-Session('coupon')['value']}}</span></li>
+							             @elseif (\Illuminate\Support\Facades\Session::get('checkout'))
+										 <li>Cart Subtotal<span>${{(float) str_replace(',','',\Gloudemans\Shoppingcart\Facades\Cart::subtotal())+Session('checkout')[0]['delivery_charge']}}</span></li>
+
+										 @elseif (session()->has('coupon')  && \Illuminate\Support\Facades\Session::get('checkout') )
+										 <li>Cart Subtotal<span>${{(float) str_replace(',','',\Gloudemans\Shoppingcart\Facades\Cart::subtotal())+Session('checkout')[0]['delivery_charge']-\Illuminate\Support\Facades\Session::get('coupon')['value']}}</span></li>
+
+
+										 @endif
+									</ul>
