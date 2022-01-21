@@ -240,6 +240,9 @@ class IndexController extends Controller
 
 
     public function autoSearch(Request $request){
+        //dd($request->all());
+        $query=$request->get('term','');
+        dd($query);
 
     }
 
