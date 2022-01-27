@@ -36,6 +36,8 @@ Route::get('product-category/{slug}/',[\App\Http\Controllers\Frontend\IndexContr
 //product details
 Route::get('product-detail/{slug}/',[IndexController::class,'productDetail'])->name('product.detail');
  
+//product Reviews
+Route::post('product-review/{slug}',[\App\Http\Controllers\ProductReviewController::class,'store'])->name('review.store');
 
 
 
@@ -108,9 +110,21 @@ Auth::routes(['register'=>false]);
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//adminlogin
+Route::group(['prefix'=>'admin'],function(){
+    Route::get('/login',[\App\Http\Controllers\Auth\Admin\LoginController::class,'showLoginForm'])->name('admin.login.form');
+
+    Route::post('/login',[\App\Http\Controllers\Auth\Admin\LoginController::class,'login'])->name('admin.login');
+
+});
+
+
+
+
+
 //admindashboard
 
-Route::group(['prefix'=>'admin','middleware'=>'auth','admin'],function(){
+Route::group(['prefix'=>'admin','middleware'=>['admin']],function(){
 
     Route::get('/',[\App\Http\Controllers\AdminController::class,'admin'])->name('admin');
     //banners
@@ -187,4 +201,8 @@ Route::group(['prefix'=>'user'],function(){
 
 
 
+});
+//file-manager bckend
+Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
 });

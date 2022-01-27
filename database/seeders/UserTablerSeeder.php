@@ -17,40 +17,59 @@ class UserTablerSeeder extends Seeder
     {
         DB::table('users')->insert([
 
-            //admin
-            [
-                'full_name'=>'Hassan admin',
-                'username'=>'Admin',
-                'email'=>'admin@gmail.com',
-                'password'=>Hash::make('1111'),
-                'role'=>'admin',
-                'status'=>'active,'
-
-            ],
-
-            //vendor
-            [
-                'full_name'=>'ummi seller',
-                'username'=>'vendor',
-                'email'=>'vendor@gmail.com',
-                'password'=>Hash::make('2222'),
-                'role'=>'seller',
-                'status'=>'active,'
-
-            ],
-            //customer
+         
             [
                 'full_name'=>'antu customer',
                 'username'=>'customer',
                 'email'=>'customer@gmail.com',
-                'password'=>Hash::make('3333'),
-                'role'=>'customer',
+                'password'=>Hash::make('1111'),
+             //   'role'=>'customer',
                 'status'=>'active,'
 
             ],
 
 
+               //admin
+            //[
+                //'full_name'=>'Hassan admin',
+                //'username'=>'Admin',
+                //'email'=>'admin@gmail.com',
+                //'password'=>Hash::make('1111'),
+             //   'role'=>'admin',
+              //  'status'=>'active,'
+
+            //],
+
+            //seller
+           // [
+             //   'full_name'=>'ummi seller',
+               // 'username'=>'vendor',
+                //'email'=>'vendor@gmail.com',
+                //'password'=>Hash::make('2222'),
+                //'role'=>'seller',
+                //'status'=>'active,'
+
+            //],
+            //customer
+
+
         ]);
-        //
+        //admins
+
+
+
+        DB::table('admins')->insert([
+
+         
+            [
+                'full_name'=>'antu Admin',
+                //'username'=>'Admin',
+                'email'=>'admin@gmail.com',
+                'password'=>Hash::make('3333'),
+             //   'role'=>'customer',
+                'status'=>'active,'
+
+            ],
+        ]);
     }
 }

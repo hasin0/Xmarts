@@ -54,13 +54,18 @@
                                             <h4>{{$product->title}}</h4>
                                             <div class="rating-main">
                                                 <ul class="rating">
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star-half-o"></i></li>
-                                                    <li class="dark"><i class="fa fa-star-o"></i></li>
+                                                    {{--@php
+                                                        $rate=ceil($product->getReview->avg('rate'))
+                                                    @endphp
+                                                        @for($i=1; $i<=5; $i++)
+                                                            @if($rate>=$i)
+                                                                <li><i class="fa fa-star"></i></li>
+                                                            @else 
+                                                                <li><i class="fa fa-star-o"></i></li>
+                                                            @endif
+                                                        @endfor--}}
                                                 </ul>
-                                                <a href="#" class="total-review">(102) Review</a>
+                                                <a href="#" class="total-review">({{(\App\Models\ProductReview::where('product_id',$product->id)->count())}}) Review</a>
                                             </div>
                                             <p class="price"><span class="discount">${{$product->price}}</span><s>${{$product->offer_price}}</s> </p>
                                             <p class="summary">{{$product->summary}}</p>
@@ -79,16 +84,20 @@
                                         </div>--}} 
                                         <!--/ End Color -->
                                         <!-- Size -->
-                                        <div class="size">
+                                        @if($product->size)
+                                        <div class="size mt-4">
                                             <h4>Size</h4>
                                             <ul>
-                                                <li><a href="#" class="one">S</a></li>
-                                                <li><a href="#" class="two">M</a></li>
-                                                <li><a href="#" class="three">L</a></li>
-                                                <li><a href="#" class="four">XL</a></li>
-                                                <li><a href="#" class="four">XXL</a></li>
+                                                @php 
+                                                    $sizes=explode(',',$product->size);
+                                                    // dd($sizes);
+                                                @endphp
+                                                @foreach($sizes as $size)
+                                                <li><a href="#" class="one">{{$size}}</a></li>
+                                                @endforeach
                                             </ul>
                                         </div>
+                                    @endif
                                         <!--/ End Size -->
                                         <!-- Product Buy -->
                                         <div class="product-buy">
@@ -161,93 +170,48 @@
                                                 <div class="tab-single review-panel">
                                                     <div class="row">
                                                         <div class="col-12">
-                                                            <div class="ratting-main">
-                                                                <div class="avg-ratting">
-                                                                    <h4>4.5 <span>(Overall)</span></h4>
-                                                                    <span>Based on 1 Comments</span>
-                                                                </div>
-                                                                <!-- Single Rating -->
-                                                                <div class="single-rating">
-                                                                    <div class="rating-author">
-                                                                        <img src="images/comments1.jpg" alt="#">
-                                                                    </div>
-                                                                    <div class="rating-des">
-                                                                        <h6>Naimur Rahman</h6>
-                                                                        <div class="ratings">
-                                                                            <ul class="rating">
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li><i class="fa fa-star-half-o"></i></li>
-                                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                            </ul>
-                                                                            <div class="rate-count">(<span>3.5</span>)</div>
-                                                                        </div>
-                                                                        <p>Duis tincidunt mauris ac aliquet congue. Donec vestibulum consequat cursus. Aliquam pellentesque nulla dolor, in imperdiet.</p>
-                                                                    </div>
-                                                                </div>
-                                                                <!--/ End Single Rating -->
-                                                                <!-- Single Rating -->
-                                                                <div class="single-rating">
-                                                                    <div class="rating-author">
-                                                                        <img src="images/comments2.jpg" alt="#">
-                                                                    </div>
-                                                                    <div class="rating-des">
-                                                                        <h6>Advin Geri</h6>
-                                                                        <div class="ratings">
-                                                                            <ul class="rating">
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                            </ul>
-                                                                            <div class="rate-count">(<span>5.0</span>)</div>
-                                                                        </div>
-                                                                        <p>Duis tincidunt mauris ac aliquet congue. Donec vestibulum consequat cursus. Aliquam pellentesque nulla dolor, in imperdiet.</p>
-                                                                    </div>
-                                                                </div>
-                                                                <!--/ End Single Rating -->
-                                                            </div>
+                                                            
                                                             <!-- Review -->
                                                             <div class="comment-review">
                                                                 <div class="add-review">
                                                                     <h5>Add A Review</h5>
                                                                     <p>Your email address will not be published. Required fields are marked</p>
                                                                 </div>
-                                                                <h4>Your Rating</h4>
+                                                                <h4>Your Rating <span class="text-danger">*</span></h4>
                                                                 <div class="review-inner">
-                                                                    <div class="ratings">
-                                                                        <ul class="rating">
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--/ End Review -->
-                                                            <!-- Form -->
-                                                            <form class="form" method="post" action="mail/mail.php">
+                                                                        <!-- Form -->
+                                                            @auth
+                                                            <form class="form" method="post" action="{{route('review.store',$product->slug)}}">
+                                                                @csrf
                                                                 <div class="row">
-                                                                    <div class="col-lg-6 col-12">
-                                                                        <div class="form-group">
-                                                                            <label>Your Name<span>*</span></label>
-                                                                            <input type="text" name="name" required="required" placeholder="">
+                                                                    <div class="col-lg-12 col-12">
+                                                                        <div class="rating_box">
+                                                                              <div class="star-rating">
+                                                                                <div class="star-rating__wrap">
+                                                                                  <input class="star-rating__input" id="star-rating-5" type="radio" name="rate" value="5">
+                                                                                  <label class="star-rating__ico fa fa-star-o" for="star-rating-5" title="5 out of 5 stars"></label>
+                                                                                  <input class="star-rating__input" id="star-rating-4" type="radio" name="rate" value="4">
+                                                                                  <label class="star-rating__ico fa fa-star-o" for="star-rating-4" title="4 out of 5 stars"></label>
+                                                                                  <input class="star-rating__input" id="star-rating-3" type="radio" name="rate" value="3">
+                                                                                  <label class="star-rating__ico fa fa-star-o" for="star-rating-3" title="3 out of 5 stars"></label>
+                                                                                  <input class="star-rating__input" id="star-rating-2" type="radio" name="rate" value="2">
+                                                                                  <label class="star-rating__ico fa fa-star-o" for="star-rating-2" title="2 out of 5 stars"></label>
+                                                                                  <input class="star-rating__input" id="star-rating-1" type="radio" name="rate" value="1">
+                                                                                  <label class="star-rating__ico fa fa-star-o" for="star-rating-1" title="1 out of 5 stars"></label>
+                                                                                  @error('rate')
+                                                                                    <span class="text-danger">{{$message}}</span>
+                                                                                  @enderror
+                                                                                </div>
+                                                                              </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-lg-6 col-12">
-                                                                        <div class="form-group">
-                                                                            <label>Your Email<span>*</span></label>
-                                                                            <input type="email" name="email" required="required" placeholder="">
-                                                                        </div>
-                                                                    </div>
+                                                                    <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                                                                    <input type="hidden" name="product_id" value="{{$product->id}}">
+
                                                                     <div class="col-lg-12 col-12">
                                                                         <div class="form-group">
-                                                                            <label>Write a review<span>*</span></label>
-                                                                            <textarea name="message" rows="6" placeholder="" ></textarea>
+                                                                            <label>Write a review</label>
+                                                                            <textarea name="review" rows="6" placeholder="" ></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-12 col-12">
@@ -257,7 +221,80 @@
                                                                     </div>
                                                                 </div>
                                                             </form>
+                                                            @else 
+                                                            <p class="text-center p-5">
+                                                                You need to <a href="{{route('login.form')}}" style="color:rgb(54, 54, 204)">Login</a> OR <a style="color:blue" href="{{route('register.form')}}">Register</a>
+
+                                                            </p>
                                                             <!--/ End Form -->
+                                                            @endauth
+                                                                </div>
+                                                            </div>
+                                                        
+                                                            <div class="ratting-main">
+                                                                <div class="avg-ratting">
+                                                                    {{-- @php 
+                                                                        $rate=0;
+                                                                        foreach($product->rate as $key=>$rate){
+                                                                            $rate +=$rate
+                                                                       
+                                                                    @endphp --}}
+                                                                    <h4>{{ceil(\App\Models\ProductReview::where('product_id',$product->id)->avg('rate'))}} <span>(Overall)</span></h4>
+                                                                     
+                                                                    <span>Based on ({{(\App\Models\ProductReview::where('product_id',$product->id)->count())}}) Comments</span>
+                                                                 
+                                                                </div>
+
+                                                                @php
+                                                                    $review=\App\Models\ProductReview::where('product_id',$product->id)->latest()->paginate(1);
+                                                                @endphp
+
+                                                                @if(count($review))
+                                                                    
+                                                               
+                                                                @foreach($review as $data)
+                                                                <!-- Single Rating -->
+                                                                <div class="single-rating">
+                                                                    <div class="rating-author">
+                                                                      {{--@php
+                                                                           $data=\App\Models\User::where('id',$data->user_id)->value('photo')
+                                                                        @endphp--}}
+                                                                        @if($data)
+                                                                        <p>{{\App\Models\User::where('id',$data->user_id)->value('photo')}}</p>
+
+                                                                         {{--<img src="{{\App\Models\User::where('id',$data->user_id)->value('photo')}}" alt="{{\App\Models\User::where('id',$data->user->id)->value('photo')}}">--}}
+                                                                        @else 
+                                                                        <img src="{{asset('backend/img/avatar.png')}}" alt="Profile.jpg">
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="rating-des">
+                                                                      <h6>{{\App\Models\User::where('id',$data->user_id)->value('full_name')}}</h6>
+                                                                        <div class="ratings">
+
+                                                                            <ul class="rating">
+                                                                                @for($i=1; $i<=5; $i++)
+                                                                                    @if($data->rate>=$i)
+                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                    @else 
+                                                                                        <li><i class="fa fa-star-o"></i></li>
+                                                                                    @endif
+                                                                                @endfor
+                                                                            </ul>
+                                                                            <div class="rate-count">(<span>{{$data->rate}}</span>)</div>
+                                                                        </div>
+                                                                        <p>{{$data->review}}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/ End Single Rating -->
+                                                                 @endforeach
+                                                                @endif
+
+                                        
+                                                                   
+                                                            </div>
+                                                            
+                                                            <!--/ End Review -->
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -472,3 +509,53 @@
 
 
 @endsection
+
+@push('styles')
+	<style>
+		/* Rating */
+		.rating_box {
+		display: inline-flex;
+		}
+
+		.star-rating {
+		font-size: 0;
+		padding-left: 10px;
+		padding-right: 10px;
+		}
+
+		.star-rating__wrap {
+		display: inline-block;
+		font-size: 1rem;
+		}
+
+		.star-rating__wrap:after {
+		content: "";
+		display: table;
+		clear: both;
+		}
+
+		.star-rating__ico {
+		float: right;
+		padding-left: 2px;
+		cursor: pointer;
+		color: #F7941D;
+		font-size: 16px;
+		margin-top: 5px;
+		}
+
+		.star-rating__ico:last-child {
+		padding-left: 0;
+		}
+
+		.star-rating__input {
+		display: none;
+		}
+
+		.star-rating__ico:hover:before,
+		.star-rating__ico:hover ~ .star-rating__ico:before,
+		.star-rating__input:checked ~ .star-rating__ico:before {
+		content: "\F005";
+		}
+
+	</style>
+@endpush

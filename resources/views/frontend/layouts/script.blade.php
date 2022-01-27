@@ -33,7 +33,7 @@
 <script src="{{asset('Frontends/js/active.js')}}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-{{--<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>--}}
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
 
 <script>

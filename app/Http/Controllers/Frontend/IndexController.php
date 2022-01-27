@@ -242,7 +242,21 @@ class IndexController extends Controller
     public function autoSearch(Request $request){
         //dd($request->all());
         $query=$request->get('term','');
-        dd($query);
+
+        $products=Product::where('title','LIKE','%'.$query.'%')->get();
+
+        $data=array();
+        foreach($products as $product){
+            $data[]=array('value'=>$product->title,'id'=>$product->id);
+        }
+        if(count($data)){
+                 return $data;
+        }else{
+            return['value'=>"NO RESULT FOUND",'id'=>''];
+        }
+       // dd($query);
+
+
 
     }
 

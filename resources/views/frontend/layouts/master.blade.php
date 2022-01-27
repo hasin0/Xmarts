@@ -109,7 +109,9 @@
 							response(data);
 						}
 					});
-				}
+				},
+				minLength:1,
+
 			});
 		});
 	</script>
