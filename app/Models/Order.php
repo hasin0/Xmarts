@@ -19,4 +19,14 @@ class Order extends Model
 
 ];
 
+public function products()
+{
+    return $this->belongsToMany(product::class,'product_orders')->withPivot('quantity')->withTimestamps(true);
+}
+
+
+public function shipping(){
+    return $this->belongsTo(Shipping::class,'shipping_id');
+}
+
 }

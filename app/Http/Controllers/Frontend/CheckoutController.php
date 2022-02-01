@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Mail\OrderMail;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Shipping;
 use App\Models\User;
 use Illuminate\Contracts\Session\Session as SessionSession;
@@ -25,7 +26,7 @@ class CheckoutController extends Controller
     {
         $user=Auth::user();
         //return $user;
-        
+
         return view('frontend.pages.checkout.checkout1',compact('user'));
     }
 
@@ -38,7 +39,7 @@ class CheckoutController extends Controller
         'email'=>'email|required|exists:users,email',
         'first_name'=>'string|required',
         'last_name'=>'string|required',
-       
+
         'phone'=>'numeric|required',
         'country'=>'string|nullable',
         'city'=>'string|required',
@@ -58,7 +59,7 @@ class CheckoutController extends Controller
         'sub_total'=>'required',
         'total_amount'=>'required',
 
-        
+
 
 
 
@@ -116,12 +117,12 @@ class CheckoutController extends Controller
      // return $request->all();
 
      $this->validate($request,[
-        
+
         'delivery_charge'=>'required|numeric',
 
 
      ]);
-     
+
        Session::push('checkout',[
            'delivery_charge'=>$request->delivery_charge,
 
@@ -138,7 +139,7 @@ class CheckoutController extends Controller
     {
     // return $request->all();
     $this->validate($request,[
-        
+
         'payment_method'=>'string|required',
         'payment_status'=>'string|in:paid,unpaid',
 
@@ -164,18 +165,18 @@ class CheckoutController extends Controller
     public function checkoutStore()
     {
         $order=new Order();
-        
+
         $order['user_id']=auth()->user()->id;
         $order['order_number']=Str::upper('Xmr-'.Str::random(8));
-        
+
         $order['sub_total']=Session::get('checkout')['sub_total'];
 
         $order['delivery_charge']=Session::get('checkout')[0]['delivery_charge'];
-      
 
 
 
-        
+
+
         if(Session::has('coupon')){
             $order['coupon']=Session::get('coupon')['value'];
 
@@ -214,13 +215,20 @@ class CheckoutController extends Controller
         $order['scity']=Session::get('checkout')['scity'];
         $order['sstate']=Session::get('checkout')['sstate'];
        // $order['post_code']=Session::get('checkout')['post_code'];
-          
+
        mail::to($order['email'])->bcc($order['semail'])->cc('hasino2258@gmail.com')->send(new OrderMail($order));
        dd('mail is sent');
        $status=$order->save();
 
+       foreach(Cart::instance('shopping')->content() as $item){
+           $product_id[]=$item->id;
+           $product=Product::find($item->id);
+           $quantity=$item->qty;
+           $order->products()->attach($product,['quantity'=>$quantity]);
+       }
+
        if($status){
-           
+
            Cart::instance('shopping')->destroy();
            Session::forget('coupon');
            Session::forget('checkout');

@@ -25,18 +25,18 @@
     <div class="sidebar-heading">
         Banner
     </div>
-   
+
     <!-- Nav Item - Pages Collapse Menu -->
     <!-- Nav Item - Charts -->
 
- {{--   <li class="nav-item">
+  {{-- <li class="nav-item">
         <a class="nav-link" href="{{route('file-manager')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Media Manager</span></a>
-    </li>--}} 
+    </li>--}}
 
-    
-  
+
+
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -56,7 +56,7 @@
 
 
 
-    
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -65,7 +65,7 @@
             Shop
         </div>
 
-        
+
 
     <!-- Categories -->
     <li class="nav-item">
@@ -82,7 +82,7 @@
         </div>
     </li>
     {{-- Products --}}
-   
+
      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#productCollapse" aria-expanded="true" aria-controls="productCollapse">
           <i class="fas fa-cubes"></i>
@@ -112,7 +112,7 @@
         </div>
     </li>
 
-    
+
 
     {{-- Coupon --}}
      <li class="nav-item">
@@ -130,12 +130,12 @@
     </li>
 
     <!--Orders -->
-      {{--<li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="{{route('order.index')}}">
             <i class="fas fa-hammer fa-chart-area"></i>
             <span>Orders</span>
         </a>
-    </li>--}}
+    </li>
 
     {{-- Shipping --}}
     <li class="nav-item">
@@ -158,7 +158,7 @@
             <i class="fas fa-comments"></i>
             <span>Reviews</span></a>
     </li>--}}
-    
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">

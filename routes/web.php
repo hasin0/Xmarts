@@ -7,6 +7,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\UserController;
@@ -35,7 +36,7 @@ Route::get('product-category/{slug}/',[\App\Http\Controllers\Frontend\IndexContr
 
 //product details
 Route::get('product-detail/{slug}/',[IndexController::class,'productDetail'])->name('product.detail');
- 
+
 //product Reviews
 Route::post('product-review/{slug}',[\App\Http\Controllers\ProductReviewController::class,'store'])->name('review.store');
 
@@ -130,15 +131,15 @@ Route::group(['prefix'=>'admin','middleware'=>['admin']],function(){
     //banners
     Route::resource('banner',BannerController::class,['index']);
    // Route::post('banner_condition',[\App\Http\Controllers\BannerController::class,'bannercondition'])->name('banner.condition');
-     
+
    //category section
    Route::resource('category',CategoryController::class,['index']);
    Route::post('category/{id}/child',[CategoryController::class,'getChildByParentID']);
 
    //brand section
    Route::resource('brand',BrandController::class,['index']);
- 
-   
+
+
    //products section
    Route::resource('product',ProductController::class,['index']);
 
@@ -157,6 +158,13 @@ Route::group(['prefix'=>'admin','middleware'=>['admin']],function(){
 //shipping section
 
 Route::resource('shipping',ShippingController::class,['index']);
+
+
+Route::resource('order',OrderController::class,['index']);
+
+
+
+
 
 
 
@@ -186,10 +194,10 @@ Route::group(['prefix'=>'user'],function(){
 
     Route::post('/shipping/address/{id}',[\App\Http\Controllers\Frontend\IndexController::class,'shippingAddress'])->name('shipping.address');
     Route::post('/update/account/{id}',[\App\Http\Controllers\Frontend\IndexController::class,'updateAccount'])->name('update.account');
-     
+
 
     Route::get('/change-password',[\App\Http\Controllers\Frontend\IndexController::class,'changePassword'])->name('user.passwordform');
-      
+
 
     Route::post('/change-password',[\App\Http\Controllers\Frontend\IndexController::class,'changPasswordStore'])->name('change.password');
 
@@ -205,4 +213,4 @@ Route::group(['prefix'=>'user'],function(){
 //file-manager bckend
 Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+});//->name('file-manager');
