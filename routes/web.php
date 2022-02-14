@@ -186,7 +186,15 @@ Route::group(['prefix'=>'seller','middleware'=>'auth','seller'],function(){
 //user dashboard
 Route::group(['prefix'=>'user'],function(){
     Route::get('/dashboard',[\App\Http\Controllers\Frontend\IndexController::class,'userDashboard'])->name('user.dashboard');
+    //  Order
     Route::get('/order',[\App\Http\Controllers\Frontend\IndexController::class,'userOrder'])->name('user.order');
+
+//Route::get('/order',"HomeController@orderIndex")->name('user.order.index');HomeController@orderShow HomeController@userOrderDelete
+Route::get('/order/show/{id}',[\App\Http\Controllers\Frontend\IndexController::class,'orderShow'])->name('user.order.show');
+Route::delete('/order/delete/{id}',[\App\Http\Controllers\Frontend\IndexController::class,'userOrderDelete'])->name('user.order.delete');
+
+
+
     Route::get('/address',[\App\Http\Controllers\Frontend\IndexController::class,'userAddress'])->name('user.address');
     Route::get('/account-detail',[\App\Http\Controllers\Frontend\IndexController::class,'userAccount'])->name('user.account');
 

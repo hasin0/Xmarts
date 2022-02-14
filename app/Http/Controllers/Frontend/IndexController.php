@@ -8,6 +8,8 @@ use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Order;
+
 use App\Models\User;
 use App\Rules\MatchOldPassword;
 
@@ -48,22 +50,22 @@ class IndexController extends Controller
          }
          else{
              if($sort=='priceAsc'){
-                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('offer_price','ASC')->paginate(12); 
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('offer_price','ASC')->paginate(12);
              }
              elseif($sort=='priceDesc'){
-                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('offer_price','DESC')->paginate(12); 
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('offer_price','DESC')->paginate(12);
             }
             elseif($sort=='discAsc'){
-                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('price','ASC')->paginate(12); 
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('price','ASC')->paginate(12);
             }
             elseif($sort=='discDesc'){
-                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('price','DESC')->paginate(12); 
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('price','DESC')->paginate(12);
             }
             elseif($sort=='titleAsc'){
-                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('title','ASC')->paginate(12); 
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('title','ASC')->paginate(12);
             }
             elseif($sort=='titleDesc'){
-                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('title','DESC')->paginate(12); 
+                $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('title','DESC')->paginate(12);
             }
             else{
                 $product=Product::where(['status'=>'active','cat_id'=>$categories->id])->paginate(12);
@@ -79,7 +81,7 @@ class IndexController extends Controller
       return view('frontend.pages.product.product-category',compact(['categories','route','product']));
 
      // if($request->ajax())
-     
+
        //   $view=view('frontend.layouts.single_product',compact('product'))->render();
          // return response()->json(['html'=>$view]);
 
@@ -93,10 +95,10 @@ class IndexController extends Controller
 
     public function shop(Request $request)
     {
-             
+
 
         $products=Product::query();
-        
+
         if(!empty($_GET['category'])){
             $slug=explode(',',$_GET['category']);
             // dd($slug);
@@ -109,7 +111,7 @@ class IndexController extends Controller
 
 
 
-        
+
         if(!empty($_GET['brand'])){
             $slugs=explode(',',$_GET['brand']);
             $brand_ids=Brand::select('id')->whereIn('slug',$slugs)->pluck('id')->toArray();
@@ -123,22 +125,22 @@ class IndexController extends Controller
 
 
             if($sort=='priceAsc'){
-                $product=$products->where(['status'=>'active'])->orderBy('offer_price','ASC')->paginate(12); 
+                $product=$products->where(['status'=>'active'])->orderBy('offer_price','ASC')->paginate(12);
              }
              elseif($sort=='priceDesc'){
-                $product=$products->where(['status'=>'active'])->orderBy('offer_price','DESC')->paginate(12); 
+                $product=$products->where(['status'=>'active'])->orderBy('offer_price','DESC')->paginate(12);
             }
             elseif($sort=='discAsc'){
-                $product=$products->where(['status'=>'active'])->orderBy('price','ASC')->paginate(12); 
+                $product=$products->where(['status'=>'active'])->orderBy('price','ASC')->paginate(12);
             }
             elseif($sort=='discDesc'){
-                $product=Product::where(['status'=>'active'])->orderBy('price','DESC')->paginate(12); 
+                $product=Product::where(['status'=>'active'])->orderBy('price','DESC')->paginate(12);
             }
             elseif($sort=='titleAsc'){
-                $product=$products->where(['status'=>'active'])->orderBy('title','ASC')->paginate(12); 
+                $product=$products->where(['status'=>'active'])->orderBy('title','ASC')->paginate(12);
             }
             elseif($sort=='titleDesc'){
-                $product=$products->where(['status'=>'active'])->orderBy('title','DESC')->paginate(12); 
+                $product=$products->where(['status'=>'active'])->orderBy('title','DESC')->paginate(12);
             }
             else{
                 $product=$products->where(['status'=>'active'])->paginate(12);
@@ -156,7 +158,7 @@ class IndexController extends Controller
             // return $price;
             // if(isset($price[0]) && is_numeric($price[0])) $price[0]=floor(Helper::base_amount($price[0]));
             // if(isset($price[1]) && is_numeric($price[1])) $price[1]=ceil(Helper::base_amount($price[1]));
-            
+
             $products->whereBetween('price',$price);
         }
 
@@ -166,13 +168,13 @@ class IndexController extends Controller
 
 
 
-        
+
         $brands=Brand::where('status','active')->orderBy('title','ASC')->with('products')->get();
 
          $products=Product::where('status','active')->paginate(10);
 
         $cats=Category::where(['status'=>'active','is_parent'=>1])->with('products')->orderBy('title','ASC')->get();
-        
+
         return view('frontend.pages.product.shop',compact('products','cats','brands'));
 
     }
@@ -203,7 +205,7 @@ class IndexController extends Controller
             }
 
 
-            
+
             $priceRangeURL="";
             if(!empty($data['price_range'])){
                 $priceRangeURL .='&price='.$data['price_range'];
@@ -264,11 +266,11 @@ class IndexController extends Controller
 
 
 
-    
+
     public function search(Request $request)
     {
         $query=$request->input('query');
-         
+
         $brands=Brand::where('status','active')->orderBy('title','ASC')->with('products')->get();
 
          $products=Product::where('status','active')->paginate(10);
@@ -288,7 +290,7 @@ class IndexController extends Controller
 
         return view('frontend.pages.product.shop',compact('products','cats','brands'));
         //->with('products',$products)->with('query',$query);//
-        
+
 
 
 
@@ -302,11 +304,11 @@ class IndexController extends Controller
 
 
 
-     
+
     public function productDetail($slug)
     {
         $product=Product::with('rel_prods')->where('slug',$slug)->first();
-   
+
         if($product)
         {
             //dd($product);
@@ -335,9 +337,9 @@ class IndexController extends Controller
 
         $data=$request->all();
         if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>'active'])){
-            
+
             Session::put('user',$data['email']);
-            
+
 
             if(Session::get('url.intended')){
                 return Redirect::to(Session::get('url.intended'));
@@ -409,9 +411,61 @@ class IndexController extends Controller
     }
 
     public function userOrder(){
-        $user=Auth::user();
-        return view('frontend.pages.user.order',compact('user'));
+      //  $user=Auth::user();
+        $orders=Order::orderBy('id','DESC')->where('user_id',auth()->user()->id)->paginate(10);
+
+        return view('frontend.pages.user.orders.order')->with('orders',$orders);
     }
+
+
+    public function orderShow($id)
+    {
+        $order=Order::find($id);
+        // return $order;
+        return view('frontend.pages.user.orders.show')->with('order',$order);
+    }
+
+    public function userOrderDelete($id)
+    {
+        $order=Order::find($id);
+        if($order){
+           if($order->condition=="processing" || $order->condition=='delivered' || $order->condition=='cancel'){
+                return redirect()->back()->with('error','You can not delete this order now');
+           }
+           else{
+                $status=$order->delete();
+                if($status){
+                    request()->session()->flash('success','Order Successfully deleted');
+                }
+                else{
+                    request()->session()->flash('error','Order can not deleted');
+                }
+                return redirect()->route('user.order');
+           }
+        }
+        else{
+            request()->session()->flash('error','Order can not found');
+            return redirect()->back();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function userAddress(){
         $users=Auth::user();
@@ -426,9 +480,9 @@ class IndexController extends Controller
     }
 
     public function billingAddress(Request $request, $id)
-    { 
+    {
 
-        
+
         $users=User::where('id',$id)->update(['country'=>$request->country,
         'city'=>$request->city,
         'postcode'=>$request->postcode,
@@ -461,9 +515,9 @@ class IndexController extends Controller
 
 
     public function shippingAddress(Request $request, $id)
-    { 
+    {
 
-        
+
         $users=User::where('id',$id)->update(['scountry'=>$request->scountry,
         'scity'=>$request->scity,
         'spostcode'=>$request->spostcode,
@@ -501,21 +555,21 @@ class IndexController extends Controller
                         request()->session()->flash('error','Please try again!');
                     }
                     return redirect()->back();
-                  
 
 
 
 
-                   
-                   
+
+
+
 
                 }
 
 
                 public function changePassword(){
-                
-                
-                
+
+
+
                     return view('frontend.pages.user.layouts.userPasswordChange');
                 }
 
@@ -529,11 +583,20 @@ class IndexController extends Controller
                         'new_password' => ['required'],
                         'new_confirm_password' => ['same:new_password'],
                     ]);
-               
+
                     User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-               
+
                     return redirect()->route('user.account')->with('success','Password successfully changed');
                 }
+
+
+
+
+                // Order
+
+
+
+
 
 
 
