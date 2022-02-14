@@ -49,6 +49,10 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+
+        $order=Order::find($id);
+        // return $order;
+        return view('backend.orders.show')->with('order',$order);
         //
     }
 
@@ -60,6 +64,12 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+
+
+
+        $order=Order::find($id);
+        return view('backend.orders.edit')->with('order',$order);
+
         //
     }
 
@@ -83,6 +93,23 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
+
+
+        $order=Order::find($id);
+        if($order){
+            $status=$order->delete();
+            if($status){
+                request()->session()->flash('success','Order Successfully deleted');
+            }
+            else{
+                request()->session()->flash('error','Order can not deleted');
+            }
+            return redirect()->route('order.index');
+        }
+        else{
+            request()->session()->flash('error','Order can not found');
+            return redirect()->back();
+        }
         //
     }
 }

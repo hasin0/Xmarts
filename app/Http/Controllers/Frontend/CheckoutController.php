@@ -150,7 +150,7 @@ class CheckoutController extends Controller
 
        Session::push('checkout',[
            'payment_method'=>$request->payment_method,
-           'payment_status'=>'paid',
+           'payment_status'=>'unpaid',
 
 
        ]);
@@ -191,7 +191,9 @@ class CheckoutController extends Controller
         //$order['sub_total']=Session::get('checkout')['sub_total'] +  $order['delivery_charge']=Session::get('checkout')[0]['delivery_charge']-$order['coupon'];
         $order['payment_method']=Session::get('checkout')[1]['payment_method'];
 
-        $order['payment_status']=Session::get('checkout')[1]['payment_status'];
+      //  $order['payment_status']=Session::get('checkout')[1]['payment_status'];
+      $order['payment_status']='unpaid';
+
         $order['condition']='pending';
         $order['delivery_charge']=Session::get('checkout')[0]['delivery_charge'];
        // return $order;
@@ -216,8 +218,8 @@ class CheckoutController extends Controller
         $order['sstate']=Session::get('checkout')['sstate'];
        // $order['post_code']=Session::get('checkout')['post_code'];
 
-       mail::to($order['email'])->bcc($order['semail'])->cc('hasino2258@gmail.com')->send(new OrderMail($order));
-       dd('mail is sent');
+     //  mail::to($order['email'])->bcc($order['semail'])->cc('hasino2258@gmail.com')->send(new OrderMail($order));
+      // dd('mail is sent');
        $status=$order->save();
 
        foreach(Cart::instance('shopping')->content() as $item){

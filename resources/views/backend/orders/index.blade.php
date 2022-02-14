@@ -59,13 +59,13 @@
                     <td>${{number_format($order->total_amount,2)}}</td>
                     <td>
                         @if($order->condition=='pending')
-                          <span class="badge badge-primary">{{$order->status}}</span>
+                          <span class="badge badge-primary">{{$order->condition}}</span>
                         @elseif($order->status=='processing')
-                          <span class="badge badge-warning">{{$order->status}}</span>
+                          <span class="badge badge-warning">{{$order->condition}}</span>
                         @elseif($order->status=='delivered')
-                          <span class="badge badge-success">{{$order->status}}</span>
+                          <span class="badge badge-success">{{$order->condition}}</span>
                         @else
-                          <span class="badge badge-danger">{{$order->status}}</span>
+                          <span class="badge badge-danger">{{$order->condition}}</span>
                         @endif
                     </td>
                     <td>

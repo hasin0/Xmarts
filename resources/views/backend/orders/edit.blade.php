@@ -1,86 +1,39 @@
 @extends('backend.layouts.master')
-@section('title','E-SHOP || Banner Edit')
+
+@section('title','Order Detail')
+
 @section('main-content')
-
 <div class="card">
-    <h5 class="card-header">Edit Banner</h5>
-    <div class="card-body">
-      <form method="post" action="{{route('banner.update',$banner->id)}}">
-        @csrf 
-        @method('PATCH')
-        <div class="form-group">
-          <label for="inputTitle" class="col-form-label">Title <span class="text-danger">*</span></label>
-        <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{$banner->title}}" class="form-control">
-        @error('title')
-        <span class="text-danger">{{$message}}</span>
-        @enderror
-        </div>
-
-        <div class="form-group">
-          <label for="inputDesc" class="col-form-label">Description</label>
-          <textarea class="form-control" id="description" name="description">{{$banner->description}}</textarea>
-          @error('description')
-          <span class="text-danger">{{$message}}</span>
-          @enderror
-        </div>
-
-        <div class="form-group">
-        <label for="inputPhoto" class="col-form-label">Photo <span class="text-danger">*</span></label>
-        <div class="input-group">
-            <span class="input-group-btn">
-                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                <i class="fa fa-picture-o"></i> Choose
-                </a>
-            </span>
-          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$banner->photo}}">
-        </div>
-        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
-          @error('photo')
-          <span class="text-danger">{{$message}}</span>
-          @enderror
-        </div>
-
-        <div class="form-group">
-          <label for="conditions" class="col-form-label">Condition <span class="text-danger">*</span></label>
-          <select name="conditions" class="form-control">
-            <option value="banner" {{(($banner->conditions=='banner') ? 'selected' : '')}}>banner</option>
-            <option value="promo" {{(($banner->conditions=='promo') ? 'selected' : '')}}>promo</option>
-          </select>
-        
-        <div class="form-group">
-          <label for="status" class="col-form-label">Status <span class="text-danger">*</span></label>
-          <select name="status" class="form-control">
-            <option value="active" {{(($banner->status=='active') ? 'selected' : '')}}>Active</option>
-            <option value="inactive" {{(($banner->status=='inactive') ? 'selected' : '')}}>Inactive</option>
-          </select>
-          @error('status')
-          <span class="text-danger">{{$message}}</span>
-          @enderror
-        </div>
-        <div class="form-group mb-3">
-           <button class="btn btn-success" type="submit">Update</button>
-        </div>
-      </form>
-    </div>
+  <h5 class="card-header">Order Edit</h5>
+  <div class="card-body">
+    <form action="{{route('order.update',$order->id)}}" method="POST">
+      @csrf
+      @method('PATCH')
+      <div class="form-group">
+        <label for="condition">condition :</label>
+        <select name="condition" id="" class="form-control">
+          <option value="">--Select condition--</option>
+          <option value="new" {{(($order->condition=='pending')? 'selected' : '')}}>New</option>
+          <option value="process" {{(($order->condition=='processing')? 'selected' : '')}}>process</option>
+          <option value="delivered" {{(($order->condition=='delivered')? 'selected' : '')}}>Delivered</option>
+          <option value="cancel" {{(($order->condition=='cancel')? 'selected' : '')}}>Cancel</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+  </div>
 </div>
-
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="{{asset('backend/summernote/summernote.min.css')}}">
-@endpush
-@push('scripts')
-<script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
-<script src="{{asset('backend/summernote/summernote.min.js')}}"></script>
-<script>
-    $('#lfm').filemanager('image');
+<style>
+    .order-info,.shipping-info{
+        background:#ECECEC;
+        padding:20px;
+    }
+    .order-info h4,.shipping-info h4{
+        text-decoration: underline;
+    }
 
-    $(document).ready(function() {
-    $('#description').summernote({
-      placeholder: "Write short description.....",
-        tabsize: 2,
-        height: 150
-    });
-    });
-</script>
+</style>
 @endpush
