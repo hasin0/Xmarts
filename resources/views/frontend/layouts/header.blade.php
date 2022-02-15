@@ -7,8 +7,8 @@
                     <!-- Top Left -->
                     <div class="top-left">
                         <ul class="list-main">
-                            <li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
-                            <li><i class="ti-email"></i> support@shophub.com</li>
+                            <li><i class="ti-headphone-alt"></i> {{\App\Models\Settings::value('phone')}}</li>
+                            <li><i class="ti-email"></i> {{\App\Models\Settings::value('email')}}</li>
                         </ul>
                     </div>
                     <!--/ End Top Left -->
@@ -16,7 +16,7 @@
                 <div class="col-lg-8 col-md-12 col-12">
                     <!-- Top Right -->
                     <div class="right-content">
-                        @auth 
+                        @auth
 
                         <ul class="list-main">
                             <li><i class="ti-location-pin"></i> <a href="{{route('user.order')}}">Order </a></li>
@@ -99,7 +99,7 @@
                                 </div>
                                 <ul class="shopping-list">
                                     @foreach (\Gloudemans\Shoppingcart\Facades\Cart::instance('shopping')->content() as $item )
-                                        
+
                                     <li>
                                         <a href="#" data-id="{{$item->rowId}}" class="remove   cart_delete" title="Remove this item"><i class="fa fa-remove cart_delete "></i></a>
                                         <a class="cart-img" href="#"><img src="{{$item->model->photo}}" alt="#"></a>
@@ -112,7 +112,7 @@
                                 <div class="bottom">
                                     <div class="total">
                                         <span>Total</span>
-                                        
+
                                         @if (session()->has('coupon'))
 
                                         <span class="total-amount">${{(float) str_replace(',','',\Gloudemans\Shoppingcart\Facades\Cart::subtotal())-Session('coupon')['value']}}</span>
@@ -120,8 +120,8 @@
 
                                           @else
                                           <span class="total-amount">${{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</span>
-  
-                                     
+
+
                                         @endif
                                     </div>
 
@@ -129,13 +129,13 @@
 
                                     <div class="total">
                                         <span>Sub Total</span>
-                                      
 
 
-                                          
+
+
                                           <span class="total-amount">${{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</span>
-  
-                                     
+
+
                                     </div>
                                     <div class="d-flex">
                                         <a href="{{route('cart')}}" class="btn btn-success">Cart</a>
@@ -144,7 +144,7 @@
 
 
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <!--/ End Shopping Item -->
@@ -225,23 +225,23 @@
                                 <li><a href="#">ladies</a></li>
                                 <li><a href="#">westrn dress</a></li>
                                 <li><a href="#">denim </a></li>
-                            </ul> --}} 
+                            </ul> --}}
                         </div>
                     </div>
-                  
+
                     <div class="col-lg-9 col-12">
 
-                        
+
                         <div class="menu-area">
                             <!-- Main Menu -->
                             <nav class="navbar navbar-expand-lg">
-                                <div class="navbar-collapse">	
-                                    
-                                    <div class="nav-inner">	
-                                        
+                                <div class="navbar-collapse">
+
+                                    <div class="nav-inner">
+
                                         <ul class="nav main-menu menu navbar-nav">
                                                 <li class="active"><a href="{{route('home')}}">Home</a></li>
-                                                <li><a href="#">Product</a></li>												
+                                                <li><a href="#">Product</a></li>
                                                 <li><a href="#">Service</a></li>
                                                 <li><a href="{{route('shop')}}">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
                                                     <ul class="dropdown">
@@ -250,7 +250,7 @@
                                                         <li><a href="checkout.html">Checkout</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="#">Pages</a></li>									
+                                                <li><a href="#">Pages</a></li>
                                                 <li><a href="#">Blog<i class="ti-angle-down"></i></a>
                                                     <ul class="dropdown">
                                                         <li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
@@ -261,8 +261,8 @@
                                     </div>
                                 </div>
                             </nav>
-                            
-                            <!--/ End Main Menu -->	
+
+                            <!--/ End Main Menu -->
                         </div>
                     </div>
                 </div>

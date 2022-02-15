@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Settings extends Model
 {
     use HasFactory;
+    protected $fillable=['short_des','description','photo','address','phone','email','logo'];
+
 }

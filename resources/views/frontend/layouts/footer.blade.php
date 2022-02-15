@@ -9,8 +9,11 @@
                         <div class="logo">
                             <a href="index.html"><img src="Frontends/images/logo2.png" alt="#"></a>
                         </div>
-                        <p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-                        <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
+                        @php
+                        $settings=DB::table('settings')->get();
+                    @endphp
+                    <p class="text">@foreach($settings as $data) {{$data->short_des}} @endforeach</p>
+                    <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">@foreach($settings as $data) {{$data->phone}} @endforeach</a></span></p>
                     </div>
                     <!-- End Single Widget -->
                 </div>
@@ -49,10 +52,9 @@
                         <!-- Single Widget -->
                         <div class="contact">
                             <ul>
-                                <li>NO. 342 - London Oxford Street.</li>
-                                <li>012 United Kingdom.</li>
-                                <li>info@eshop.com</li>
-                                <li>+032 3456 7890</li>
+                                <li>@foreach($settings as $data) {{$data->address}} @endforeach</li>
+                                <li>@foreach($settings as $data) {{$data->email}} @endforeach</li>
+                                <li>@foreach($settings as $data) {{$data->phone}} @endforeach</li>
                             </ul>
                         </div>
                         <!-- End Single Widget -->

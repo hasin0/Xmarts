@@ -163,6 +163,13 @@ Route::resource('shipping',ShippingController::class,['index']);
 Route::resource('order',OrderController::class,['index']);
 
 
+//settings section
+//AdminController@'AdminController@settingsUpdate'
+Route::get('settings',[\App\Http\Controllers\SettingController::class,'settings'])->name('settings');
+Route::post('setting/update',[\App\Http\Controllers\SettingController::class,'settingsUpdate'])->name('settings.update');
+
+
+
 
 
 

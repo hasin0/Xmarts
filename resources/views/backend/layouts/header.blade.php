@@ -46,7 +46,7 @@
           <i class="fas fa-home fa-fw"></i>
         </a>
       </li>
- 
+
       <!-- Nav Item - Alerts -->
       {{--<li class="nav-item dropdown no-arrow mx-1">
        @include('backend.notification.show')
@@ -79,11 +79,11 @@
           {{--<a class="dropdown-item" href="{{route('change.password.form')}}">
             <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
             Change Password
-          </a>
+          </a>--}}
           <a class="dropdown-item" href="{{route('settings')}}">
             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
             Settings
-          </a>--}}
+          </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
