@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Seller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -229,3 +230,36 @@ Route::delete('/order/delete/{id}',[\App\Http\Controllers\Frontend\IndexControll
 Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });//->name('file-manager');
+
+
+//Sellerlogin
+Route::group(['prefix'=>'seller'],function(){
+    Route::get('/login',[\App\Http\Controllers\Auth\Seller\AuthController::class,'showLoginForm'])->name('seller.login.form');
+
+    Route::post('/login',[\App\Http\Controllers\Auth\Seller\AuthController::class,'login'])->name('seller.login');
+
+});
+
+
+
+//sellerdashboard
+
+Route::group(['prefix'=>'seller','middleware'=>['seller']],function(){
+
+Route::get('/',[\App\Http\Controllers\SellerController::class,'dashboard'])->name('seller');
+
+ //products section
+   Route::resource('seller-product',\App\Http\Controllers\Auth\Seller\ProductController::class,['index']);
+
+
+
+
+
+
+
+});
+
+//file-manager seller
+//Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+  //  \UniSharp\LaravelFilemanager\Lfm::routes();
+//});//->name('file-manager');

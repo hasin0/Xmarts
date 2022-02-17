@@ -15,12 +15,14 @@ class CreateSellersTable extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
-            
+
             $table->string('full_name');
           $table->string('username')->nullable();
             $table->string('email')->unique();//->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');//->nullable();
+           $table->text('address')->nullable();
+
             $table->string('photo')->nullable();
             $table->string('phone')->unique()->nullable();
             $table->enum('status',['active','inactive'])->default('active');

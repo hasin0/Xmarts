@@ -17,7 +17,7 @@ class UserTablerSeeder extends Seeder
     {
         DB::table('users')->insert([
 
-         
+
             [
                 'full_name'=>'antu customer',
                 'username'=>'customer',
@@ -60,11 +60,35 @@ class UserTablerSeeder extends Seeder
 
         DB::table('admins')->insert([
 
-         
+
             [
                 'full_name'=>'antu Admin',
                 //'username'=>'Admin',
                 'email'=>'admin@gmail.com',
+                'password'=>Hash::make('3333'),
+             //   'role'=>'customer',
+                'status'=>'active,'
+
+            ],
+        ]);
+
+
+
+
+
+
+
+
+        DB::table('sellers')->insert([
+
+
+            [
+                'full_name'=>'Hassan Seller',
+                'username'=>'Seller',
+                'address'=>'GRA minna',
+                'phone'=>'0812323322',
+                'photo'=>'',
+                'email'=>'Seller@gmail.com',
                 'password'=>Hash::make('3333'),
              //   'role'=>'customer',
                 'status'=>'active,'
