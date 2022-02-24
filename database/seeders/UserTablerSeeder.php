@@ -91,6 +91,8 @@ class UserTablerSeeder extends Seeder
                 'email'=>'Seller@gmail.com',
                 'password'=>Hash::make('3333'),
              //   'role'=>'customer',
+             'is_verified'=>0,
+
                 'status'=>'active,'
 
             ],

@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
-use Illuminate\Support\Str;
+namespace App\Http\Controllers\seller;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
+use Illuminate\Support\Str;
+
 use App\Models\User;
 
+
 use App\Models\Category;
-
-
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -18,14 +20,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
     public function index()
     {
-
-        $products=Product::orderBy('id','DESC')->paginate(20);
+        $products=Product::where(['added_by'=>'seller','user_id'=>auth('seller')->user()->id])->orderBy('id','DESC')->paginate(20);
         // dd $products;
         return view('seller.product.index')->with('products',$products);
+        //
         //
     }
 
@@ -36,11 +36,25 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brand=Brand::get();
-        $category=Category::where('is_parent',1)->get();
-        $vendor=User::where('role','vendor')->get();
 
-        return view('seller.product.create')->with('categories',$category)->with('brands',$brand)->with('vendor',$vendor);
+
+        if(auth('seller')->user()->is_verified){
+
+
+            $brand=Brand::get();
+                $category=Category::where('is_parent',1)->get();
+               // $vendor=User::where('role','vendor')->get();
+
+                return view('seller.product.create')->with('categories',$category)->with('brands',$brand);//->with('vendor',$vendor);
+
+
+        }else{
+
+           // request()->session()->flash('error','Please try again!!');
+
+            return back()->with('error','you need to be verified seller!!');
+        }
+    //
 
         //
     }
@@ -53,6 +67,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
 
 
         $this->validate($request,[
@@ -79,6 +94,11 @@ class ProductController extends Controller
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
+
+        $data['added_by']='seller';
+        $data['user_id']=auth('seller')->user()->id;
+
+
 
         $data['offer_price']=($request->price-(($request->price*$request->discount)/100));
 
@@ -112,7 +132,6 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-
         //
     }
 
@@ -124,14 +143,16 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+
         $product=Product::find($id);
         $brand=Brand::get();
         $items=Product::where('id',$id)->get();
 
         $category=Category::where('is_parent',1)->get();
-        $vendor=User::where('role','vendor')->get();
+       // $vendor=User::where('role','vendor')->get();
 
-        return view('seller.product.edit')->with('categories',$category)->with('brands',$brand)->with('vendor',$vendor)->with('product',$product)->with('items',$items);
+        return view('seller.product.edit')->with('categories',$category)->with('brands',$brand)->with('product',$product)->with('items',$items);
+        //
         //
     }
 
@@ -145,44 +166,6 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
 
-        $product=Product::findOrFail($id);
-
-        $this->validate($request,[
-            'title'=>'string|required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
-            'photo'=>'string|required',
-            'size'=>'nullable',
-            'stock'=>"required|numeric",
-            'cat_id'=>'required|exists:categories,id',
-            'brand_id'=>'nullable|exists:brands,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
-            'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
-            'price'=>'required|numeric',
-            'discount'=>'nullable|numeric'
-        ]);
-
-        $data=$request->all();
-       // $slug=Str::slug($request->title);
-       // $count=Product::where('slug',$slug)->count();
-
-
-        $data['offer_price']=($request->price-(($request->price*$request->discount)/100));
-
-        $data['is_featured']=$request->input('is_featured',0);
-
-        // return $data;
-        $status=$product->fill($data)->save();
-        if($status){
-            request()->session()->flash('success','Product Successfully updated');
-        }
-        else{
-            request()->session()->flash('error','Please try again!!');
-        }
-        return redirect()->route('product.index');
-        //
 
 
         //
@@ -196,20 +179,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-
-
-        $product=Product::findOrFail($id);
-        $status=$product->delete();
-
-        if($status){
-            request()->session()->flash('success','Product successfully deleted');
-        }
-        else{
-            request()->session()->flash('error','Error while deleting product');
-        }
-        return redirect()->route('product.index');
-
         //
     }
-
 }

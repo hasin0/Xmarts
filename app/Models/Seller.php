@@ -11,7 +11,7 @@ class Seller extends Authenticatable
 {
     use HasFactory;
     protected $guard='sellers';
-    protected $fillable=['full_name','username','address','email','email_verified_at','password','photo','phone','status'];
+    protected $fillable=['full_name','username','address','email','email_verified_at','password','photo','phone','status','is_verified'];
 
 
 }

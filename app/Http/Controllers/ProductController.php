@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+
         $products=Product::orderBy('id','DESC')->paginate(20);
         // dd $products;
         return view('backend.product.index')->with('products',$products);
@@ -37,7 +37,7 @@ class ProductController extends Controller
         $brand=Brand::get();
         $category=Category::where('is_parent',1)->get();
         $vendor=User::where('role','vendor')->get();
-        
+
         return view('backend.product.create')->with('categories',$category)->with('brands',$brand)->with('vendor',$vendor);
 
         //
@@ -52,7 +52,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-        
+
         $this->validate($request,[
             'title'=>'string|required',
             'summary'=>'string|required',
@@ -128,7 +128,7 @@ class ProductController extends Controller
 
         $category=Category::where('is_parent',1)->get();
         $vendor=User::where('role','vendor')->get();
-        
+
         return view('backend.product.edit')->with('categories',$category)->with('brands',$brand)->with('vendor',$vendor)->with('product',$product)->with('items',$items);
         //
     }
@@ -165,12 +165,12 @@ class ProductController extends Controller
         $data=$request->all();
        // $slug=Str::slug($request->title);
        // $count=Product::where('slug',$slug)->count();
-       
+
 
         $data['offer_price']=($request->price-(($request->price*$request->discount)/100));
 
         $data['is_featured']=$request->input('is_featured',0);
-      
+
         // return $data;
         $status=$product->fill($data)->save();
         if($status){
@@ -195,10 +195,10 @@ class ProductController extends Controller
     public function destroy($id)
     {
 
-        
+
         $product=Product::findOrFail($id);
         $status=$product->delete();
-        
+
         if($status){
             request()->session()->flash('success','Product successfully deleted');
         }
@@ -206,7 +206,7 @@ class ProductController extends Controller
             request()->session()->flash('error','Error while deleting product');
         }
         return redirect()->route('product.index');
-    
+
         //
     }
 }

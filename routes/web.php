@@ -249,8 +249,9 @@ Route::group(['prefix'=>'seller','middleware'=>['seller']],function(){
 Route::get('/',[\App\Http\Controllers\SellerController::class,'dashboard'])->name('seller');
 
  //products section
-   Route::resource('seller-product',\App\Http\Controllers\Auth\Seller\ProductController::class,['index']);
+   Route::resource('/seller-product',\App\Http\Controllers\seller\ProductController::class);
 
+   //Route::resource('product',ProductController::class,['index']);
 
 
 
@@ -260,6 +261,6 @@ Route::get('/',[\App\Http\Controllers\SellerController::class,'dashboard'])->nam
 });
 
 //file-manager seller
-//Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth:admin']], function () {
-  //  \UniSharp\LaravelFilemanager\Lfm::routes();
-//});//->name('file-manager');
+Route::group(['prefix' => 'filemanager', 'middleware' => ['web']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});//->name('file-manager');

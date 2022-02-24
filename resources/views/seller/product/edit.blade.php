@@ -5,7 +5,7 @@
 <div class="card">
     <h5 class="card-header">Edit Product</h5>
     <div class="card-body">
-      <form method="post" action="{{route('product.update',$product->id)}}">
+      <form method="post" action="{{route('seller-product.update',$product->id)}}">
         @csrf
         @method('PATCH')
         <div class="form-group">
