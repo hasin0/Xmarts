@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\Seller;
@@ -170,6 +171,7 @@ Route::get('settings',[\App\Http\Controllers\SettingController::class,'settings'
 Route::post('setting/update',[\App\Http\Controllers\SettingController::class,'settingsUpdate'])->name('settings.update');
 
 
+Route::resource('seller',SellerController::class,['index']);
 
 
 

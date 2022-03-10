@@ -167,6 +167,64 @@ class ProductController extends Controller
     {
 
 
+        $product=Product::findOrFail($id);
+
+
+        $this->validate($request,[
+            'title'=>'string|required',
+            'summary'=>'string|required',
+            'description'=>'string|nullable',
+            'photo'=>'string|required',
+            'size'=>'nullable',
+            'stock'=>"required|numeric",
+            'cat_id'=>'required|exists:categories,id',
+            'brand_id'=>'nullable|exists:brands,id',
+            'child_cat_id'=>'nullable|exists:categories,id',
+            'is_featured'=>'sometimes|in:1',
+            'status'=>'required|in:active,inactive',
+            'condition'=>'required|in:default,new,hot',
+            'price'=>'required|numeric',
+            'discount'=>'nullable|numeric'
+        ]);
+
+        $data=$request->all();
+        $slug=Str::slug($request->title);
+        $count=Product::where('slug',$slug)->count();
+        if($count>0){
+            $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
+        }
+        $data['slug']=$slug;
+
+        $data['added_by']='seller';
+        $data['user_id']=auth('seller')->user()->id;
+
+
+
+        $data['offer_price']=($request->price-(($request->price*$request->discount)/100));
+
+
+        $data['is_featured']=$request->input('is_featured',0);
+        $size=$request->input('size');
+        if($size){
+            $data['size']=implode(',',$size);
+        }
+        else{
+            $data['size']='';
+        }
+        // return $size;
+        // return $data;
+        $status=$product->fill($data)->save();
+        if($status){
+            request()->session()->flash('success','Product Successfully Updated');
+        }
+        else{
+            request()->session()->flash('error','Please try again!!');
+        }
+        return redirect()->route('seller-product.index');
+        //
+
+
+
 
         //
     }
@@ -179,6 +237,17 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+
+        $product=Product::findOrFail($id);
+        $status=$product->delete();
+
+        if($status){
+            request()->session()->flash('success','Product successfully deleted');
+        }
+        else{
+            request()->session()->flash('error','Error while deleting product');
+        }
+        return redirect()->route('seller-product.index');
         //
     }
 }

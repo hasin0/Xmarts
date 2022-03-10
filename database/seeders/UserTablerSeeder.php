@@ -67,7 +67,7 @@ class UserTablerSeeder extends Seeder
                 'email'=>'admin@gmail.com',
                 'password'=>Hash::make('3333'),
              //   'role'=>'customer',
-                'status'=>'active,'
+                'status'=>'active'
 
             ],
         ]);
@@ -93,7 +93,7 @@ class UserTablerSeeder extends Seeder
              //   'role'=>'customer',
              'is_verified'=>0,
 
-                'status'=>'active,'
+                'status'=>'active'
 
             ],
         ]);
