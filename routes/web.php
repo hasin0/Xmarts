@@ -248,7 +248,7 @@ Route::group(['prefix'=>'seller'],function(){
 
 Route::group(['prefix'=>'seller','middleware'=>['seller']],function(){
 
-Route::get('/',[\App\Http\Controllers\SellerController::class,'dashboard'])->name('seller');
+Route::get('/',[\App\Http\Controllers\Sellers\SellerController::class,'dashboard'])->name('seller');
 
  //products section
    Route::resource('/seller-product',\App\Http\Controllers\seller\ProductController::class);

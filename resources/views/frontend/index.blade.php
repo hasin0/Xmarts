@@ -3,8 +3,8 @@
 @section('content')
 
 
-       
- 
+
+
 <!-- Slider Area -->
 @if(count($banners)>0)
     <section id="Gslider" class="carousel slide" data-ride="carousel">
@@ -23,8 +23,8 @@
                         <p>{!! html_entity_decode($banner->description) !!}</p>
                        {{-- <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{route('product-grids')}}" role="button">Shop Now<i class="far fa-arrow-alt-circle-right"></i></i></a>--}}
                     </div>
-                </div>  
-            @endforeach   
+                </div>
+            @endforeach
         </div>
         <a class="carousel-control-prev"   background-color="red" href="#Gslider" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -46,8 +46,8 @@
         <div class="row">
             <!-- Single category  -->
             @foreach ($categories as $cat )
-                
-            
+
+
             <div class="col-lg-4 col-md-6 col-12">
                 <div class="single-banner">
                     <img src="{{$cat->photo}}" alt="{{$cat->title}}">
@@ -62,7 +62,7 @@
 
             @endforeach
             <!-- /End Single category  -->
-            
+
             <!-- Single Banner  -->
            {{--<div class="col-lg-4 col-md-6 col-12">
                 <div class="single-banner">
@@ -110,16 +110,16 @@
 <!-- Start Product Area -->
 
 @php
-    $new_products=\App\Models\Product::where(['status'=>'active','condition'=>'new'])->orderBy('id','DESC')->limit('10')->get(             );
+    $new_products=\App\Models\Product::where(['status'=>'active','condition'=>'new'])->orderBy('id','DESC')->limit('10')->get();
 @endphp
 
 @if (count($new_products)>0)
-    
+
 
 <div class="product-area section">
-   
+
         <div class="container">
-          
+
 
             <div class="row">
                 <div class="col-12">
@@ -143,18 +143,18 @@
                             </ul>
                             <!--/ End Tab Nav -->
                         </div>
-                         
-                          
-                        
+
+
+
                         <div class="tab-content" id="myTabContent">
                             <!-- Start Single Tab -->
-                             
+
                             <div class="tab-pane fade show active" id="man" role="tabpanel">
 
                                 <div class="tab-single">
 
                                     <div class="row">
-                                        @foreach ($new_products as $nproducts ) 
+                                        @foreach ($new_products as $nproducts )
                                         <div class="col-xl-3 col-lg-4 col-md-4 col-12">
                                             <div class="single-product">
                                                 <div class="product-img">
@@ -164,11 +164,11 @@
                                                         $photo=explode(',',$nproducts->photo);
                                                         @endphp
                                                         <img class="default-img" src="{{$photo[0]}}" alt="{{$nproducts->title}}">
-                                                         
 
 
 
-                                                        
+
+
                                                     </a>
                                                     <div class="button-head">
                                                         <div class="product-action">
@@ -183,10 +183,10 @@
                                                 </div>
                                                 <div class="product-content">
                                                     {{--<h3><a href="product-details.html">Women Hot Collection</a></h3>--}}
-                                                      
+
                                                     <h3><a href="{{route('product.detail',$nproducts->slug)}}">{{$nproducts->title}}</a></h3>
 
-                                                    
+
                                              <p>{{\App\Models\Brand::where('id',$nproducts->brand_id)->value('title')}}</p>
                                                   <div class="product-price">
                                                       <span>${{number_format($nproducts->offer_price,2)}} <small><del class="text-danger ">${{number_format($nproducts->price,2)}}</del></small></span>
@@ -197,7 +197,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    
+
 
                                      {{--   <div class="col-xl-3 col-lg-4 col-md-4 col-12">
                                             <div class="single-product">
@@ -390,7 +390,7 @@
                                 </div>
                             </div>
 
-                           
+
 
                             <!--/ End Single Tab -->
                             <!-- Start Single Tab -->
@@ -1491,12 +1491,12 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>--}} 
+                            </div>--}}
                             <!--/ End Single Tab -->
                         </div>
-                        
+
                     </div>
-                
+
 
                 </div>
             </div>
@@ -1540,18 +1540,67 @@
 <!-- End Midium Banner -->
 
 <!-- Start Most Popular -->
+{{--
+@php
+    $product=\App\Models\Product::where(['status'=>'active'])->orderBy('id','DESC')->limit('10')->get();
+@endphp --}}
+
+{{-- @if (count($product)>0) --}}
 <div class="product-area most-popular section">
+
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="section-title">
-                    <h2>Hot Item</h2>
+                    <h2>Hot Deals</h2>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="owl-carousel popular-slider">
+
+
+                   @foreach($product_lists as $product)
+                        @if($product->condition=='hot')
+                            <!-- Start Single Product -->
+                        <div class="single-product">
+                            <div class="product-img">
+                                <a href="{{route('product-detail',$product->slug)}}">
+                                    @php
+                                        $photo=explode(',',$product->photo);
+                                    // dd($photo);
+                                    @endphp
+                                    <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                    <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                    {{-- <span class="out-of-stock">Hot</span> --}}
+                                </a>
+                                <div class="button-head">
+                                    <div class="product-action">
+                                        <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                        <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" ><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
+                                    </div>
+                                    <div class="product-action-2">
+                                        <a href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h3><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
+                                <div class="product-price">
+                                    <span class="old">${{number_format($product->price,2)}}</span>
+                                    @php
+                                    $after_discount=($product->price-($product->price*$product->discount)/100)
+                                    @endphp
+                                    <span>${{number_format($after_discount,2)}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Single Product -->
+                        @endif
+                    @endforeach
+                    {{-- @foreach($product as $key=>$products)
+
                     <!-- Start Single Product -->
                     <div class="single-product">
                         <div class="product-img">
@@ -1572,16 +1621,17 @@
                             </div>
                         </div>
                         <div class="product-content">
-                            <h3><a href="product-details.html">Black Sunglass For Women</a></h3>
+                            <h3><a href="product-details.html">{{$brand->title}}</a></h3>
                             <div class="product-price">
-                                <span class="old">$60.00</span>
-                                <span>$50.00</span>
+                                <span class="old">${{\App\Models\Product::where('id',$brand->brand_id)->value('price')}}</span>
+                                <span>${{\App\Models\Product::where('id',$brand->brand_id)->value('price')}}</span> --}}
                             </div>
                         </div>
                     </div>
+
                     <!-- End Single Product -->
                     <!-- Start Single Product -->
-                    <div class="single-product">
+                    {{-- <div class="single-product">
                         <div class="product-img">
                             <a href="product-details.html">
                                 <img class="default-img" src="Frontends/https://via.placeholder.com/550x750" alt="#">
@@ -1657,13 +1707,15 @@
                                 <span>$50.00</span>
                             </div>
                         </div>
-                    </div>
+                    </div>--}}
                     <!-- End Single Product -->
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <!-- End Most Popular Area -->
 
 <!-- Start Shop Home List  -->
@@ -1872,8 +1924,8 @@
                 <div class="col-lg-6 col-12 padding-right">
                     <div class="image">
                         <img src="Frontends/https://via.placeholder.com/750x590" alt="#">
-                    </div>	
-                </div>	
+                    </div>
+                </div>
                 <div class="col-lg-6 col-12 padding-left">
                     <div class="content">
                         <div class="heading-block">
@@ -1885,8 +1937,8 @@
                                 <div class="clearfix" data-countdown="2021/02/30"></div>
                             </div>
                         </div>
-                    </div>	
-                </div>	
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -2160,14 +2212,14 @@
 			 complete:function(){
 
 				$('#add_to_cart'+product_id).html('<i class="fa fa-cart-plus "></i> Add To Cart');
-				
+
 				},
 				success:function(data){
 					//console.log(data);
 					if(data['status']){
-						$('body #header-ajax').html(data['header']); 
-					$('body #cart-counter').html(data['cart-counter']); 
-						
+						$('body #header-ajax').html(data['header']);
+					$('body #cart-counter').html(data['cart-counter']);
+
 
 						swal({
 									title: "Good job!",
@@ -2182,7 +2234,7 @@
 						console.log(err);
 					}
 		});
-		
+
 	});
 </script>
 
@@ -2218,14 +2270,14 @@
 			 complete:function(){
 
 				$('#add_to_wishlist_'+product_id).html('<i class="fas fa-heart "></i> Add To Cart');
-				
+
 				},
 				success:function(data){
 					//console.log(data);
 					if(data['status']){
-						$('body #header-ajax').html(data['header']); 
-					$('body #wishlist_counter').html(data['wishlist_count']); 
-						
+						$('body #header-ajax').html(data['header']);
+					$('body #wishlist_counter').html(data['wishlist_count']);
+
 
 						swal({
 									title: "Good job!",
@@ -2236,9 +2288,9 @@
 
 					}
 					else if(data['present']){
-						$('body #header-ajax').html(data['header']); 
+						$('body #header-ajax').html(data['header']);
 					$('body #wishlist_counter').html(data['wishlist_count']);
-						
+
 						swal({
 									title: " oops!",
 									text: data['message'],
@@ -2257,9 +2309,9 @@
 
 					}
 				},
-				
+
 		});
-		
+
 	});
 </script>
 

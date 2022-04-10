@@ -26,9 +26,13 @@ class IndexController extends Controller
     {
         $banners=Banner::where(['status'=>'active','conditions'=>'banner'])->orderBy('id','DESC')->limit('4')->get();
         $categories=Category::where(['status'=>'active','is_parent'=>1])->limit(3)->orderBy('id','DESC')->get();
+        $products=Product::where('status','active')->orderBy('id','DESC')->limit(8)->get();
 
 
-        return view('frontend.index',compact(['banners','categories']));
+        return view('frontend.index')
+        ->with('banners',$banners)
+        ->with('categories',$categories)
+        ->with('product_lists',$products);//,compact(['banners','categories']));
     }
 
             //product catergory
